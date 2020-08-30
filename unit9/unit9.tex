@@ -1,0 +1,252 @@
+\def\CTeXPreproc{Created by ctex v0.2.9, don't edit!}
+%\documentclass{beamer}
+\documentclass[%handout,
+xcolor=pdftex]{beamer}
+\mode<presentation> {
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+\let\Tiny=\tiny
+\usetheme{Singapore}
+\usecolortheme{dolphin}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{bm}
+%\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}[page number]
+\newcommand\Fontvi{\fontsize{9pt}{8}\selectfont}
+\newcommand\Fontvii{\fontsize{7pt}{8}\selectfont}
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}\newtheorem{proposition}{Proposition}
+\title{Unit 9: ARMA Models: MA(1)}
+\author[STAT 5170: Applied Time Series, Unit 9]{Jeffrey Woo}
+\institute{Department of Statistics, University of Virginia}
+\date{Spring 2020}
+
+\AtBeginSubsection[] {
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+
+\begin{frame}
+\frametitle{Readings for Unit 9}
+
+Textbook chapter 3.1 (page 81 to 83).
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Last Unit}
+
+\begin{enumerate}
+\item AR(p) process
+\item AR(1) process
+\item AR(1) in terms of backshift operator
+\item AR(1) and causality
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{This Unit}
+\begin{enumerate}
+\item Identifiability
+\item MA(1) in terms of backshift operator
+\item MA(1) and invertibility
+\item ARMA model
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Motivation}
+
+In the previous unit, we noted a condition for an AR(1) model to be causal. In this unit, we will explore another issue, this time regarding MA models. This issue is called identifiability.
+
+\end{frame}
+
+\section{MA(1) and Invertibility}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{MA(q) Process}
+
+Recall the MA(q) model
+$$
+x_t=w_t + \theta_1 w_{t-1}+...+ \theta_q w_{t-q}.
+$$
+We can rewrite this using backshift operator as
+\begin{equation} \label{eq:MA}
+x_t=\theta(B) w_t
+\end{equation}
+
+ where $\theta(B)=1+\theta_1 B+...+\theta_q B^q$ which can be called the \textbf{moving average operator}. We already know that an MA(q) process is stationary.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{MA(1) Process}
+
+Let's look at the $MA(1)$ model, i.e.
+ $$
+ x_t=w_t+ \theta w_{t-1}
+ $$
+ We can then calculate the autocovariance function.
+ $$
+ \gamma(0)=(1+\theta^2) \sigma_w^2
+ $$
+ and
+ $$
+ \gamma(1)=\theta \sigma_w^2
+ $$
+ and zero for larger lags.
+ Assume that we simulate from a model using $\theta=a$ and $\sigma_w^2=b$, then look at the autocovariance
+ $$ \gamma(0)=b+a^2 b, \quad  \gamma(1)=a b $$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Identifiability}
+
+\textbf{Question}: Suppose we have another MA(1) model with $\theta=1/a$ and $\sigma_w^2=a^2 b$, what is the autocovariance function for this model?
+
+\vspace{40mm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Identifiability}
+
+ Which one is ``correct''?  Both are correct: this is an \textbf{identifiability} problem as we have MA models that are not unique. We'll use the one that gives us an infinite order AR process.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Identifiability}
+
+ Rewrite the MA(1) model as
+ $$
+ w_t=-\theta w_{t-1}+x_t.
+ $$
+ This is just like the AR(1) that we saw last time but now the roles for $x_t, w_t$ are reversed.  So, we could write this as
+\begin{eqnarray} \label{eq:invert}
+ w_t &=& \sum_{j=0}^\infty (-\theta)^j x_{t-j} \nonumber\\
+     &=& \sum_{j=0}^\infty (-\theta)^j B^j x_{t},
+\end{eqnarray}
+ provided that $|\theta|<1$.
+
+\end{frame}
+
+ \begin{frame}
+\frametitle{MA(1) in Terms of Backshift Operator}
+(\ref{eq:invert}) can be written as
+
+\begin{equation}
+ w_t=\sum_{j=0}^\infty \pi_j x_{t-j} = \pi(B) x_{t},
+\end{equation}
+
+where $\pi(B) = \sum_{j=0}^\infty \pi_j B^j$ and $\pi_j = (-\theta)^j$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Identifiability}
+
+\textbf{Question}: What's an intuitive explanation as to why we want $|\theta|<1$ in (\ref{eq:invert})?
+
+\vspace{60mm}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Invertible MA(1)}
+
+We could write an MA(1) as
+
+\begin{eqnarray*}
+ x_t &=& w_t + \theta w_{t-1} \\
+     &=& w_t +\theta \sum_{j=0}^\infty (-\theta)^j x_{t-1-j}\\
+     &=&  w_t - \sum_{j=1}^\infty (-\theta)^j x_{t-j}.
+\end{eqnarray*}
+
+ So, we have written the MA(1) as an infinite order AR process. We require $|\theta|<1$ for invertibility for an MA(1). An MA model which can be written as an infinite order AR process is called a \textbf{invertible} MA.  We will later extend and formalize a condition on the parameters $\theta_1, \theta_2, \cdots, \theta_q$ for an MA(q) process to be invertible.
+
+
+\end{frame}
+
+
+
+\section{ARMA Model}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{ARMA Model}
+
+Recall that an AR(p) model is given by
+ $$
+ x_t=\phi_1 x_{t-1} +\phi_2 x_{t-2} + \cdots \phi_p x_{t-p} + w_t
+ $$
+ or in terms of backshift operator
+ $$
+\phi(B) x_t =w_t, \quad \mbox{where} \quad \phi(B)=1-\phi_1 B-\phi_2 B^2-\ldots-\phi_p B^p.
+$$
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ARMA Model}
+
+An MA(q) model is given by
+$$
+x_t = w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2} + \cdots + \theta_q w_{t-q}
+$$
+or in terms of backshift operator
+$$
+x_t =  \theta(B)w_t, \quad \mbox{where} \quad \theta(B)=1+\theta_1 B+\theta_2 B^2 +\ldots + \theta_q B^q.
+$$
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ARMA Model}
+
+$x_t$ is called an ARMA (p,q) model if $x_t$ is stationary and
+can be written as
+ $$
+ \phi(B) x_t=\theta(B) w_t.
+ $$
+
+Thus far, we have seen a number of issues with the general definition of ARMA(p,q) models:
+
+\begin{itemize}
+\item Stationary AR models that depend on the \textbf{future}.
+\item MA models that are not \textbf{unique} (identifiability issue).
+\end{itemize}
+
+We will next look at one more issue with ARMA(p,q) models before formalizing conditions for causality and invertibility.
+
+\end{frame}
+
+
+
+\end{document} 

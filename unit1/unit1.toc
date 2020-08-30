@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Introduction to Time Series}{2}{0}{1}
+\beamer@sectionintoc {2}{Features of Time Series}{11}{0}{2}
+\beamer@sectionintoc {3}{Time Domain Vs Frequency Domain}{16}{0}{3}
+\beamer@sectionintoc {4}{A Few More Examples}{19}{0}{4}

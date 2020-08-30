@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{White Noise}{6}{0}{1}
+\beamer@sectionintoc {2}{Random Walk Model}{10}{0}{2}
+\beamer@sectionintoc {3}{Autoregressive Models}{17}{0}{3}
+\beamer@sectionintoc {4}{Moving Average Models}{19}{0}{4}
+\beamer@sectionintoc {5}{Mean Function}{21}{0}{5}
+\beamer@sectionintoc {6}{Measures of Dependence}{25}{0}{6}

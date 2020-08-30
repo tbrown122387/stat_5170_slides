@@ -1,0 +1,399 @@
+\def\CTeXPreproc{Created by ctex v0.2.9, don't edit!}
+%\documentclass{beamer}
+\documentclass[%handout,
+xcolor=pdftex]{beamer}
+\mode<presentation> {
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+\let\Tiny=\tiny
+\usetheme{Singapore}
+\usecolortheme{dolphin}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{bm}
+%\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}[page number]
+\newcommand\Fontvi{\fontsize{9pt}{8}\selectfont}
+\newcommand\Fontvii{\fontsize{7pt}{8}\selectfont}
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}\newtheorem{proposition}{Proposition}
+\title{Unit 10: ARMA Models}
+\author[STAT 5170: Applied Time Series, Unit 10]{Jeffrey Woo}
+\institute{Department of Statistics, University of Virginia}
+\date{Spring 2020}
+
+\AtBeginSubsection[] {
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+
+\begin{frame}
+\frametitle{Readings for Unit 10}
+
+Textbook chapter 3.1 (page 83 to 88).
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Last Unit}
+\begin{enumerate}
+\item Identifiability
+\item MA(1) in terms of backshift operator
+\item MA(1) and invertibility
+\item ARMA model
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{This Unit}
+\begin{enumerate}
+\item ARMA(p,q)
+\item Condition for causality
+\item Condition for invertibility
+\end{enumerate}\end{frame}
+
+
+\begin{frame}
+\frametitle{Motivation}
+
+In this unit, we formalize conditions for the existence of a unique stationary solution, as well as causality and invertibility for an ARMA process.
+
+\end{frame}
+
+\section{ARMA}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{ARMA}
+
+A time series $\{x_t: t=...,-2,-1,0,1,2,...\}$ is ARMA(p,q) if it is stationary and
+\begin{equation*}
+x_t=\phi_1 x_{t-1}+...+\phi_p x_{t-p}+w_t+\theta_1 w_{t-1}+...+\theta_q w_{t-q}.
+\end{equation*}
+If $x_t$ has a nonzero mean $\mu$, then
+$$
+x_t=\alpha + \phi_1 x_{t-1}+...+\phi_p x_{t-p}+w_t+\theta_1 w_{t-1}+...+\theta_q w_{t-q}
+$$
+where $\alpha=\mu(1-\phi_1-...-\phi_p)$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ARMA in Terms of Backshift Operator}
+
+Another way to state an ARMA model is with the backshift operator as
+\begin{equation} \label{eq:arma_op}
+\phi(B)x_t=\theta(B) w_t,
+\end{equation}
+where
+$$
+\phi(B) = 1-\phi_1 B - \phi_2 B^2 - \cdots - \phi_p B^p
+$$
+and
+$$
+\theta(B) = 1+\theta_1 B + \theta_2 B^2 + \cdots + \theta_q B^q.
+$$
+
+Thus far, we have seen a number of issues with the general definition of ARMA(p,q) models:
+
+\begin{itemize}
+\item AR models that depend on the \textbf{future}.
+\item MA models that are not \textbf{unique} (identifiability issue).
+\end{itemize}
+
+One more issue: \underline{\hspace{35 mm}}.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Parameter Redundancy}
+
+\textbf{Example:}
+
+\vspace{80mm}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Parameter Redundancy}
+
+We could fit an ARMA(1,1) model to white noise data and find that the parameter estimates are significant. If we had produced an ACF plot of this data, we would have seen that the data are uncorrelated.
+\end{frame}
+
+\begin{frame}
+\frametitle{Issues with ARMA}
+
+So we see there are a few issues with ARMA models:
+
+\begin{itemize}
+\item \underline{\hspace{35 mm}} in models.
+\item AR models that depend on the \underline{\hspace{15 mm}}.
+\item MA models that are not \underline{\hspace{15 mm}}.
+\end{itemize}
+
+To overcome these issues, we require some restrictions on the model parameters.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{AR and MA Polynomials}
+
+The AR and MA polynomials are defined as
+
+\begin{equation} \label{eq:ar_poly}
+\phi(z) = 1 - \phi_1 z - \cdots - \phi_p z^p,
+\end{equation}
+
+and
+
+\begin{equation} \label{eq:ma_poly}
+\theta(z) = 1 + \theta_1 z + \cdots + \theta_p z^q,
+\end{equation}
+
+where $\phi_p \neq 0$, $\theta_q \neq 0$, and $z$ is a complex number.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Complex Numbers}
+
+\begin{itemize}
+
+\item A complex number $z$ is a combination of \underline{\hspace{8 mm}} and \underline{\hspace{15 mm}} numbers, and is usually written as $z = a + ib$.
+
+\item The unit of an imaginary number is $i = \sqrt{-1}$. $i^2$ results in -1.
+
+\item The real part of $z$ is denoted by $Re(z)$ which is $a$, and the imaginary part of $z$ is denoted by $Im(z)$ which is $b$.
+
+\item The modulus of $z$ is $|z| = \sqrt{a^2 + b^2}$.
+
+\item The argument of $z$ is $arg(z) = \tan^{-1} (\frac{b}{a})$.
+
+\end{itemize}
+
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Complex Numbers}
+
+
+
+
+
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Parameter Redundancy}
+
+To address the issue of parameter redundancy, we consider ARMA(p,q) models in their simplest form. In addition to the definition in (\ref{eq:arma_op}), we require that the AR and MA polynomials $\phi(z)$ and $\theta(z)$ have \underline{\hspace{30 mm}}. \\
+\vspace{5mm}
+Therfore, the process $x_t=0.5 x_{t-1}-0.5 w_{t-1}+w_t$ discussed earlier is not an ARMA(1,1) process because it is white noise in its reduced form.
+
+\end{frame}
+
+\section{Causality}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{General Linear Process}
+
+Before going into causality, we define a \underline{\hspace{40 mm}}. $\{x_t\}$ is a general linear process if it can be represented as a weighted linear combination of present and past white noise terms, i.e.
+
+\begin{equation} \label{eq:linear}
+x_t = w_t + \psi_1 w_{t-1} + \psi_2 w_{t-2} + \cdots
+\end{equation}
+
+If (\ref{eq:linear}) is an infinite series, we require that $\sum_{i=1}^{\infty} \psi_i^2 < \infty$.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Causality}
+
+To address the issue of future-dependent models, we define causality. An ARMA model is causal if it can be written as
+\begin{equation} \label{eq:causal}
+x_t=\sum_{j=0}^\infty \psi_j w_{t-j}=\psi(B) w_t
+\end{equation}
+where $\psi(B)=\sum_{j=0}^\infty \psi_j  B^j$, $\sum_{j=0}^\infty |\psi_j| < \infty$, and we set $\psi_0 = 1$.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Causality}
+
+A causal ARMA model can be viewed as an infinite order MA as defined in (\ref{eq:causal}) or as a general linear process as defined in (\ref{eq:linear}), with dependency
+only on present and \textbf{PAST} white noise terms.   Note that if the process is
+simply $MA(q)$ then $\phi(B)$ will have zeros as coefficient
+beyond the $q+1$ term. We next state a condition for causality.
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Condition for Causality}
+
+A model $x_t$ is causal iff  $\phi(z)\neq 0$ for $|z| \leq 1$.  The infinite order MA series may then be represented as
+\begin{equation} \label{eq:causal_rep}
+\psi(z)=\sum_{j=0}^\infty \psi_j z^j=\frac{\theta(z)}{\phi(z)},  |z| \leq 1.
+\end{equation}
+
+Recall that this prevents the blow up we saw in simulations.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Condition for Causality}
+
+Another way to check for causality is that an ARMA process is causal only when the roots of $\phi(z)$ lie \underline{\hspace{13 mm}} the unit circle, i.e. $\phi(z)=0$ only when $|z| > 1$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Causality and MA(q)}
+
+\textbf{Question}: Is an MA(q) process (in other words, an ARMA(0,q)) causal?
+
+\vspace{40mm}
+
+\end{frame}
+
+\section{Invertibility}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{Invertibility}
+
+Recall also, that we have a problem of non-uniqueness for MA processes, and we decided we would use the MA process that had an infinite order AR representation.  This is called {\bf invertibility}. An ARMA model is said to be invertible if the time series can be written as
+\begin{equation} \label{eq:invert}
+\pi(B) x_t = \sum_{j=0}^\infty \pi_j x_{t-j}=w_t
+\end{equation}
+where $\pi(B) = \sum_{j=0}^\infty \pi_j  B^j $, $ \sum_{j=0}^\infty |\pi_j| < \infty$ and $\pi_0=1$. Note that $\pi$ will have zeros beyond the $p+1$th term if the process is $AR(p)$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Condition for Invertibility}
+
+A process is called invertible iff $\theta(z) \neq 0$ for $|z|\leq1$.  Therefore,
+\begin{equation} \label{eq:invert_rep}
+\pi(z)=\sum_{j=0}^\infty \pi_j z^j=\frac{\phi(z)}{\theta(z)},  |z|\leq 1.
+\end{equation}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Condition for Invertibility}
+
+Another way to check for invertibility is that an ARMA process is invertible only when the roots of $\theta(z)$ lie \underline{\hspace{13 mm}} the unit circle, i.e. $\theta(z)=0$ only when $|z| > 1$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Invertibility and AR(p)}
+
+\textbf{Question}: Is an AR(p) process (in other words, an ARMA(p,0)) invertible?
+
+\vspace{40mm}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Complex Roots}
+
+Every degree $p$ polynomial $a(z)$ can be factorized as
+
+$$
+a(z) = a_0 + a_1 z + \cdots + a_p z^p = a_p(z-z_1)(z-z_2)\cdots(z-z_p),
+$$
+
+where $z_1, \cdots, z_p \in \mathbb{C}$ are the roots of $a(z)$. If the coefficients $a_0, a_1, \cdots, a_p$ are all real, then the roots are all either real or come in \underline{\hspace{45 mm}}.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Complex Roots: Example}
+
+
+\end{frame}
+
+\section{Worked Examples}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{Theorem}
+
+Before proceeding with worked examples, we state the following theorem (with AR and MA polynomials in their reduced form):
+
+\begin{itemize}
+\item A unique stationary solution to $\phi(B) x_t = \theta(B) w_t$ exists iff the roots of $\phi(z)$ \underline{\hspace{9 mm}} the unit circle.
+
+\item This ARMA(p,q) process is causal iff the roots of $\phi(z)$ are \underline{\hspace{13 mm}} the unit circle.
+
+\item It is invertible iff the roots of $\theta(z)$ are \underline{\hspace{13 mm}} the unit circle.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Worked Example I}
+
+\textbf{Question}: Is $x_t = 1.5x_{t-1} + w_t + 0.2 w_{t-1}$ causal or invertible? Derive the corresponding $\psi$- and/or $\pi$- weights.
+
+\vspace{50mm}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Worked Example II}
+
+\textbf{Question}: Is $x_t = -0.25x_{t-2} + w_t + 2 w_{t-1}$ causal or invertible? Derive the corresponding $\psi$- and/or $\pi$- weights.
+
+\vspace{50mm}
+
+
+
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Worked Example III}
+
+%\textbf{Question}: Is $x_t = 0.4 x_{t-1} + 0.45 x_{t-2} + w_t + w_{t-1} + 0.25 w_{t-2}$ causal or invertible? Derive the corresponding $\psi$- and/or $\pi$- weights.
+
+%\vspace{50mm}
+
+
+
+%\end{frame}
+
+\end{document} 

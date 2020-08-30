@@ -1,0 +1,14 @@
+\frametitle{Example: Australian Unemployment}
+
+\begin{verbatim}
+fitted<-ts(fit$coef[2]*c1+fit$coef[3]*s1+fit$coef[4]
+*c2+fit$coef[5]*s2+fit$coef[6]*c3+fit$coef[7]
+*s3+fit$coef[8]*c4+fit$coef[9]*s4+fit$coef[10]
+*c5+fit$coef[11]*s5)
+
+par(mfrow=c(3,1))
+plot(fitted, ylim=c(miny,maxy), main="Fitted Values")
+plot(ts(fitted-dauemp), ylim=c(miny,maxy), main="Residuals")
+acf(ts(fitted-dauemp), main="ACF for Residuals")
+\end{verbatim}
+

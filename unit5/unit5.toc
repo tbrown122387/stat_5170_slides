@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Detrending with Linear Regression}{6}{0}{1}
+\beamer@sectionintoc {2}{Differencing for Stationarity}{16}{0}{2}
+\beamer@sectionintoc {3}{Backshift Operator}{23}{0}{3}
+\beamer@sectionintoc {4}{Worked Example}{29}{0}{4}

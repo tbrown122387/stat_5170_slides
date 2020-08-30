@@ -1,0 +1,19 @@
+\frametitle{Marriages in Church of England against Mortality Rate and Year}
+
+Use both mortality rate and year as predictor variables.
+
+\begin{verbatim}
+> comparetimefit<-lm(marriages~mortality+time)
+> anova(comparetimefit)
+Analysis of Variance Table
+
+Response: marriages
+          Df Sum Sq Mean Sq F value Pr(>F)
+mortality  1 960.52  960.52 416.149 <2e-16 ***
+time       1   1.07    1.07   0.464 0.4994
+Residuals 43  99.25    2.31
+
+> AIC(comparetimefit)
+[1] 173.9157
+\end{verbatim}
+

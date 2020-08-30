@@ -1,0 +1,413 @@
+\def\CTeXPreproc{Created by ctex v0.2.9, don't edit!}
+%\documentclass{beamer}
+\documentclass[%handout,
+xcolor=pdftex]{beamer}
+\mode<presentation> {
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+\let\Tiny=\tiny
+\usetheme{Singapore}
+\usecolortheme{dolphin}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{bm}
+%\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}[page number]
+\newcommand\Fontvi{\fontsize{9pt}{8}\selectfont}
+\newcommand\Fontvii{\fontsize{7pt}{8}\selectfont}
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}\newtheorem{proposition}{Proposition}
+\title{Unit 11: ARMA Autocorrelation and Partial Autocorrelation Functions}
+\author[STAT 5170: Applied Time Series, Unit 11]{Jeffrey Woo}
+\institute{Department of Statistics, University of Virginia}
+\date{Spring 2020}
+
+\AtBeginSubsection[] {
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+
+\begin{frame}
+\frametitle{Readings for Unit 11}
+
+Textbook chapter 3.3.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Last Unit}
+\begin{enumerate}
+\item ARMA(p,q)
+\item Condition for causality
+\item Condition for invertibility
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{This Unit}
+\begin{enumerate}
+\item ACF for MA(q)
+\item ACF for Causal ARMA(p,q)
+\item Partial Autocorrelation Function (PACF)
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Motivation}
+
+In this unit we will study the autocorrelation and partial autocorrelation
+ functions for ARMA processes.
+
+\end{frame}
+
+\section{ACF for MA(q) Processes}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{MA(q) Process}
+
+ Let's start with an MA($q$) process
+ $$
+ x_t = w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2} + \cdots + \theta_q w_{t-q} = \sum^q_{j=0} \theta_j w_{t-j},
+ $$
+where we have written $\theta_0=1$. Then
+$$
+E(x_t) =\sum^q_{j=0} \theta_j E(w_{t-j})=0.
+$$
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Autocovariance for MA(q)}
+
+The autocovariance function is
+\begin{eqnarray*}
+\gamma(h) = cov(x_t,x_{t+h}) &=& E \Big [ \sum^q_{j=0} \theta_j w_{t-j} \sum^q_{j'=0} \theta_{j'} w_{t+h-j'} \Big ] \cr
+&=& \sum^q_{j=0} \sum^q_{j'=0} \theta_j \theta_{j'} E(w_{t-j} w_{t+h-j'}).
+\end{eqnarray*}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Autocovariance for MA(q)}
+
+Recall that $E(w_s w_t) = \sigma^2_w$ if $s=t$ and $E(w_s
+w_t)=0$ otherwise. So we have
+\begin{eqnarray}\label{eq:1}
+\gamma(h) = \left \{ \begin{array}{ll}
+\sigma^2_w \sum^{q-h}_{j=0} \theta_j \theta_{j+h}, & 0 \le h\le q, \\
+0, & h \ge q+1.
+\end{array} \right.
+\end{eqnarray}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ACF for MA(q)}
+
+Recall that $\gamma(h)=\gamma(-h)$, so we will only need the
+values for $h\ge 0$. Dividing $\gamma(h)$ by $\gamma(0)$ in
+(\ref{eq:1}), we obtain the autocorrelation function (ACF) of
+an MA($q$) model
+\begin{eqnarray}\label{eq:2}
+\rho(h) = \left \{ \begin{array}{ll}
+\frac{\sum^{q-h}_{j=0} \theta_j \theta_{j+h}}{1+\theta^2_1+\cdots+\theta^2_q}, & 0 \le h\le q, \\
+0, & h \ge q+1.
+\end{array} \right.
+\end{eqnarray}
+
+
+\end{frame}
+
+\section{ACF for Causal ARMA(p,q) Processes}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{ACF for Causal ARMA(p,q)}
+
+We have seen in (\ref{eq:2}), for MA($q$) models, the ACF will
+be zero for lags greater than $q$. Moreover, because
+$\theta_q\ne 0$,
+$\rho(q)=\theta_0\theta_q/(1+\theta_1^2+\cdots+\theta^2_q)\ne
+0$. Thus, the ACF provides information
+about the order of the dependence for a MA model. How about
+ARMA or AR models?
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Causal ARMA(p,q)}
+
+Now we discuss causal ARMA($p,q$) model
+$$
+\phi(B) x_t = \theta(B) w_t,
+$$
+where the roots of $\phi(z)$ are outside the unit circle. Since
+the model is causal, we have the MA($\infty$) representation
+\begin{eqnarray}\label{eq:3}
+x_t = \sum^\infty_{j=0} \psi_j w_{t-j},  \quad \mbox{where} \quad
+\psi(z) = \frac{\theta(z)}{\phi(z)} = \sum^\infty_{j=0} \psi_j z^j.
+\end{eqnarray}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Autocovariance for Causal ARMA(p,q)}
+
+It follows  that $E(x_t)=0$ and by (\ref{eq:1}), the
+autocovariance function of $x_t$ is given by
+$$
+\gamma(h) =cov(x_t,x_{t+h})= \sigma^2_w \sum^\infty_{j=0} \psi_j \psi_{j+h},
+\quad h\ge 0.
+$$
+
+\end{frame}
+
+%\begin{frame}
+%\frametitle{$\psi$-weights for Causal ARMA(p,q)}
+
+%\textbf{Question}: Given functions $\theta(z)$ and $\phi(z)$, how to
+%obtain the coefficients $\psi_j$ in (\ref{eq:3})?
+
+%\vspace{40mm}
+
+%\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Autocovariance for Causal AR(1)}
+
+To motivate the idea, consider a causal AR(1) model $x_t=\phi_1
+x_{t-1}+w_t$.  Then
+
+\vspace{40mm}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Autocovariance for Causal AR(1)}
+
+Here, we have used causality: $x_{t-2}$ only depends on
+$w_{t-2},w_{t-3},\ldots$ and hence is independent of $w_{t-1}$
+and $w_t$. Consequently, $cov(w_{t-1},x_{t-2})=0$ and
+$cov(w_t,x_{t-2})=0$. The ACF for an AR(1) model is very
+different from an MA(1) model whose ACF is zero at lag 2.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Autocovariance for Causal AR(1)}
+
+\textbf{Question}: Why is $\gamma(2)\ne 0$ for an AR(1) process?
+
+\vspace{50mm}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Removing Connection}
+
+Consider the following,
+
+\vspace{40mm}
+
+because of causality. Thus, after removing the
+connection $x_{t-1}$, the covariance between $x_t$ and
+$x_{t-2}$ is zero.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Notation}
+
+One way to remove linear connections is through \textbf{linear
+regression}. Let $\hat{x}_{t+h}$ denote the regression of $x_{t+h}$ on
+$\{x_{t+h-1},x_{t+h-2},\ldots,x_{t+1}\}$, which we write as
+\begin{equation}
+\hat{x}_{t+h} = \beta_1 x_{t+h-1} + \beta_2 x_{t+h-2} + \cdots + \beta_{h-1} x_{t+1}.
+\end{equation}
+Here we do not include the intercept assuming the mean of $x_t$
+is zero. Otherwise, replace $x_t$ with $x_t - \mu_x$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Notation}
+
+In addition, let $\hat{x}_t$ denote the regression of
+$x_t$ on $\{x_{t+1},x_{t+2},\ldots,x_{t+h-1}\}$, then
+\begin{equation}
+\hat{x}_t = \beta_1 x_{t+1} + \beta_2 x_{t+2} + \cdots + \beta_{h-1} x_{t+h-1}.
+\end{equation}
+
+\end{frame}
+
+\section{Partial Autocorrelation Function}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{Partial Autocorrelation Function}
+
+The {\bf partial autocorrelation
+function (PACF)} of a stationary process $x_t$, denoted by
+$\phi_{hh}$, for $h=1,2,\ldots$, is
+
+\begin{equation}
+\phi_{11} = corr(x_{t+1},x_t) = \rho(1)
+\end{equation}
+and
+\begin{equation}
+\phi_{hh}=corr(x_{t+h}-\hat{x}_{t+h}, x_t-\hat{x}_t), \quad h\ge 2.
+\end{equation}
+
+Note that, the PACF, $\phi_{hh}$ is the correlation between
+$x_{t+h}$ and $x_{t}$ with the linear dependence of
+$\{x_{t+1},\cdots,x_{t+h-1}\}$, on each, removed.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Partial Autocorrelation Function}
+
+Now we consider PACF of a causal AR(1) model: $x_t=\phi
+x_{t-1}+w_t$, with $|\phi|<1$. By definition,
+$\phi_{11}=corr(x_1,x_0)=\rho(1)=\phi$. To calculate
+$\phi_{22}$, consider the regression of $x_{t+2}$ on $x_{t+1}$, say
+$\hat{x}_{t+2}=\beta x_{t+1}$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Partial Autocorrelation Function}
+
+Recall in linear regression we seek to minimize the error sum of squares (SSE). In this setting, we seek to minimize
+
+\vspace{50mm}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Partial Autocorrelation Function}
+
+Next, consider the regression of $x_t$ on $x_{t+1}$, say
+$\hat{x}_t=\beta x_{t+1}$. We choose $\beta$ to minimize
+
+\vspace{50mm}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Partial Autocorrelation Function}
+
+In general, for a causal AR($p$) model $x_h=\sum^p_{j=1}\phi_j
+x_{h-j}+w_h$. When $h>p$, the regression of $x_h$ on
+$x_{h-1},\ldots,x_1$ is
+$$
+\hat{x}_{h} = \sum^p_{j=1} \phi_j x_{h-j}.
+$$
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Partial Autocorrelation Function}
+
+Thus, when $h>p$, by causality,
+$$
+\phi_{hh} = corr(x_h-\hat{x}_{h},x_0-\hat{x}_{0}) = corr(w_h,x_0-\hat{x}_{0}) = 0.
+$$
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Summary}
+
+\begin{itemize}
+\item The ACF of MA($q$) model cuts at lag $q$. The PACF of an AR($p$) model cuts at lag $p$.
+\item Identification of an MA(q) model is best done with ACF; identification of an AR(p) model is best done with PACF.
+\item The PACF between $x_t$ and $x_{t-h}$ is the conditional correlation between $x_t$ and $x_{t-h}$. It is conditional on $x_{t-h+1}, \cdots, x_{t-1}$, the set of observations that come \textbf{between time $t$ and $t-h$}.
+\end{itemize}
+
+\end{frame}
+
+\section{Worked Examples}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{ACF and PACF of Causal AR(2)}
+
+\includegraphics[width=100mm, height=80mm]{ar.pdf}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ACF and PACF of Invertible MA(2)}
+
+\includegraphics[width=100mm, height=80mm]{ma.pdf}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ACF and PACF of Causal and Invertible ARMA(2,2)}
+
+\includegraphics[width=100mm, height=80mm]{arma.pdf}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ACF and PACF of Causal AR and Invertible MA}
+
+(From page 99, Table 3.1 of text)
+
+\begin{center}
+\begin{tabular}{cccc}
+\hline \\
+ & \textbf{AR(p)} & \textbf{MA(q)} & \textbf{ARMA(p,q)} \\
+\hline \\
+ACF & Decay & 0 after lag $q$ & Decay\\
+PACF & 0 after lag $p$ & Decay & Decay\\
+\hline
+\end{tabular}
+\end{center}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Fish Population Example}
+
+This time series from ``recruit.dat" contains data on fish population in the central Pacific Ocean. The numbers represent the number of new fish in the years 1950-1987. \textbf{Question}: Based on the ACF and PACF plots, what process do you think is most likely to describe this time series?
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Fish Population Example}
+
+\includegraphics[width=100mm, height=80mm]{recruit.pdf}
+
+\end{frame}
+
+\end{document} 

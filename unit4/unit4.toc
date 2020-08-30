@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{Linear Regression Basics}{6}{0}{1}
+\beamer@sectionintoc {2}{Parameter Estimation}{9}{0}{2}
+\beamer@sectionintoc {3}{Model Selection}{15}{0}{3}
+\beamer@sectionintoc {4}{Diagnostics}{20}{0}{4}
+\beamer@sectionintoc {5}{Worked Example}{23}{0}{5}

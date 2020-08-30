@@ -1,0 +1,476 @@
+\def\CTeXPreproc{Created by ctex v0.2.9, don't edit!}
+%\documentclass{beamer}
+\documentclass[%handout,
+xcolor=pdftex]{beamer}
+\mode<presentation> {
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+\let\Tiny=\tiny
+\usetheme{Singapore}
+\usecolortheme{dolphin}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{mathrsfs}
+\usepackage{bm}
+%\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}[page number]
+\newcommand\Fontvi{\fontsize{9pt}{8}\selectfont}
+\newcommand\Fontvii{\fontsize{7pt}{8}\selectfont}
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}\newtheorem{proposition}{Proposition}
+\title{Unit 12: Forecasting}
+\author[STAT 5170: Applied Time Series, Unit 12]{Jeffrey Woo}
+\institute{Department of Statistics, University of Virginia}
+\date{Spring 2020} %ADD BLP AND PACF?
+
+\AtBeginSubsection[] {
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+
+\begin{frame}
+\frametitle{Readings for Unit 12}
+
+Textbook chapter 3.4 (skip pages 103 to 106).
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Last Unit}
+\begin{enumerate}
+\item ACF for MA(q)
+\item ACF for Causal ARMA(p,q)
+\item Partial Autocorrelation Function
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{This Unit}
+\begin{enumerate}
+\item Best linear predictor
+\item ARMA forecasting
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Motivation}
+
+In this unit, we explore forecasting: predicting future values of a time series based on observed data.
+
+\end{frame}
+
+\section{Forecasting for Stationary Processes}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{Forecasting}
+
+In forecasting, the goal is to predict future values of a time series, $x_{n+m}$, based on the observed data $\mathbf{x} = \{x_n, x_{n-1}, \cdots, x_1 \}$. In this unit, we assume $\{x_t\}$ is stationary.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Forecasting}
+
+The minimum mean square error predictor of $x_{n+m}$ is
+
+\begin{equation}
+x_{n+m}^n = \mbox{E}(x_{n+m} | \mathbf{x})
+\end{equation}
+
+as the conditional expectation minimizes the mean square error $\mbox{E}\left[x_{n+m} - g(\mathbf{x}) \right]^2$, where $g(\mathbf{x})$ is a function of the observations.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Forecasting}
+
+First, we restrict our attention to predictors that are linear functions of the observations, i.e.
+
+\begin{equation} \label{eq:BLP}
+x_{n+m}^n = \alpha_0 + \sum_{j=1}^n \alpha_j x_j
+\end{equation}
+
+where $\alpha_0, \alpha_1, \cdots, \alpha_n \in \mathbb{R}$. Linear predictors of the form (\ref{eq:BLP}) that minimize the mean square prediction error are called \underline{\hspace{20 mm}} \\ \underline{\hspace{30 mm}}.\\
+
+\vspace{5mm}
+Linear prediction depends on on the second-order moments of the process, which can be estimated from the data.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Projection Theorem}
+
+\begin{theorem}
+\label{projection}
+Let $\mathcal{M}$ be a closed subspace of the Hilbert space $\mathcal{H}$ and let $y$ be an element in $\mathcal{H}$. Then, $y$ can be uniquely represented as $y = \hat{y} + z$ where $\hat{y} \in \mathcal{M}$ and $z$ is orthogonal to $\mathcal{M}$. Therefore, for any $w \in \mathcal{M}$,
+
+\begin{itemize}
+\item $\lVert y-w \rVert \geq \lVert y-\hat{y} \rVert$ and
+\item $<z,w> = 0$.
+\end{itemize}
+\end{theorem}
+
+%$\hat{y}$ is the projection of $y$ on $\mathcal{M}$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Projection Theorem}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Projection Theorem: Linear Prediction}
+
+Given $1, x_1, x_2, \cdots, x_n \in \{X: \mbox{E}(X^2) < \infty \}$, choose $\alpha_0, \alpha_1, \cdots, \alpha_n \in \mathbb{R}$ so that $U = \alpha_0 + \sum_{j=1}^n \alpha_j x_j$ minimizes $\mbox{E}(x_{n+m} - U)^2$.\\
+\vspace{5mm}
+
+Note that: $\mathcal{M} = \{U = \alpha_0 + \sum_{j=1}^n \alpha_j x_j: \alpha_j \in \mathbb{R} \} = \bar{sp}\{1,x_1, \cdots, x_n \}$ and $y=x_{n+m}$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Projection Theorem: Linear Prediction}
+
+Let $x_{n+m}^n$ denote the best linear predictor, i.e.
+
+$$
+\lVert x_{n+m}^n - x_{n+m} \rVert^2 \leq \lVert U - x_{n+m} \rVert^2
+$$
+
+for all $U \in \mathcal{M}$. The projection theorem implies\\
+
+\vspace{40mm}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Projection Theorem: Linear Prediction}
+
+\begin{itemize}
+\item The prediction errors $x_{n+m}^n - x_{n+m}$ are orthogonal to the prediction variables $(1,x_1, \cdots, x_n)$.
+\item Orthogonality of prediction error and 1 implies we can \underline{\hspace{30 mm}} from all variables $x_{n+m}$ and $x_i$.
+\item Therefore, we typically assume $\mu=0$ for forecasting.
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{BLP for Stationary Process}
+
+Given $x_1, \cdots, x_n$, the best linear predictor for stationary processes, $x_{n+m}^n = \alpha_0 + \sum_{j=1}^n \alpha_j x_j$, of $x_{n+m}$, for $m \geq 1$, is found by solving
+
+\begin{equation} \label{eq:predict_eqns}
+\mbox{E}\left[ (x_{n+m} - x_{n+m}^n)x_k \right] = 0 \text{ for } k=0, 1,\cdots,n,
+\end{equation}
+
+where $x_0 =1$, for $\alpha_0,\alpha_1,\cdots,\alpha_n$. The equations (\ref{eq:predict_eqns}) are called the \textbf{prediction equations}.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{One-Step-Ahead Linear Prediction}
+
+Consider one-step-ahead prediction. Given $x_1, \cdots, x_n$, we want to forecast $x_{n+1}$. The BLP takes the form
+
+\begin{equation}
+x_{n+1}^n = \phi_{n1}x_n + \phi_{n2} x_{n-1} + \cdots + \phi_{nn}x_1.
+\end{equation}
+
+Therefore, the prediction equations (\ref{eq:predict_eqns}) become\\
+
+\vspace{50mm}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{One-Step-Ahead Linear Prediction}
+
+In matrix form:
+
+\vspace{70mm}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{One-Step-Ahead Linear Prediction}
+
+The mean square one-step-ahead prediction error is
+
+\begin{eqnarray}
+P_{n+1}^n &=& \mbox{E}(x_{n+1} - x_{n+1}^n)^2 \nonumber \\
+          &=& \nonumber \\
+          &=& \nonumber \\
+          &=& \nonumber \\
+          &=& \nonumber \\
+          &=&
+\end{eqnarray}
+\end{frame}
+
+\begin{frame}
+\frametitle{Prediction Intervals}
+
+Construct prediction interval:
+
+$$
+x_{n+1}^n \pm 1.96 \sqrt{P_{n+1}^n}.
+$$
+
+
+for Gaussian processes. The prediction error has distribution $N(0,P_{n+1}^n)$.
+
+\end{frame}
+
+
+\section{ARMA Forecasting}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{ARMA Forecasting}
+
+Let's consider an ARMA model that is causal and invertible
+$$
+\phi(B)  X_t = \theta(B) w_t,
+$$
+where
+$$
+\phi(B) = 1-\phi_1 B - \cdots - \phi_p B^p \quad
+\mbox{and} \quad
+\theta(B) = 1+\theta_1 B + \cdots+\theta_q B^q.
+$$
+\end{frame}
+
+\begin{frame}
+\frametitle{ARMA Forecasting}
+
+By causality and invertibility, we have
+\begin{eqnarray}\label{eq:1}
+ x_{n+m}=\sum_{j=0}^\infty \psi_j w_{n+m-j},\quad \ \psi_0=1,
+\end{eqnarray}
+
+where $\psi(z) = \frac{\theta(z)}{\phi(z)} = \sum^\infty_{j=0} \psi_j z^j$,  and
+ \begin{eqnarray}\label{eq:2}
+ w_{n+m}=\sum_{j=0}^\infty \pi_j x_{n+m-j}, \quad \ \pi_0=1,
+\end{eqnarray}
+
+where $\pi(z) = \frac{\phi(z)}{\theta(z)} = \sum^\infty_{j=0} \pi_j z^j$.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{ARMA Forecasting}
+
+Given the past information $x_{n},x_{n-1},\ldots$, we are
+interested in predicting $x_{n+m}$. We use $\widetilde{x}_{n+m}=E(x_{n+m}|x_n,x_{n-1},...) $,
+the conditional expectation of $x_{n+m}$ given all the past
+$x_n,x_{n-1},\ldots,$ to forecast $x_{n+m}$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ARMA Forecasting}
+
+Note also that
+$$
+E(w_t|x_n,x_{n-1},...)=0
+$$
+for $t>n$  because of causality. For $t \leq n$, $w_t$ is
+determined by $x_t,x_{t-1},\ldots,$ which are included in
+$x_n,x_{n-1},\ldots$. Thus,
+$$
+E(w_t|x_n,x_{n-1},...)=w_t.
+$$
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ARMA Forecasting}
+
+So
+
+\begin{eqnarray}\label{eq:causal_white}
+E(w_t|x_n,x_{n-1},...) = \left \{ \begin{array}{ll}
+0, & t > n, \\
+w_t, & t \leq n.
+\end{array} \right.
+\end{eqnarray}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{ARMA Forecasting}
+
+Now, we take the infinite AR representation (\ref{eq:2}) and
+take the conditional expectation (conditioning on $x_n,
+x_{n-1},...$) on both sides of (\ref{eq:2}) to get
+
+\vspace{40mm}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ARMA Forecasting}
+
+This leads to
+\begin{eqnarray}\label{eq:3}
+\widetilde{x}_{n+m} =- \sum_{j=1}^{m-1} \pi_j \widetilde{x}_{n+m-j}-\sum_{j=m}^\infty \pi_j x_{n+m-j}.
+\end{eqnarray}
+Letting $m=1$ in (\ref{eq:3}), we have
+\begin{eqnarray*}
+\widetilde{x}_{n+1} = -\sum^\infty_{j=1} \pi_j x_{n+1-j} = - \sum^\infty_{j'=0} \pi_{j'+1} x_{n-j'}.
+\end{eqnarray*}
+So, start by finding $\widetilde{x}_{n+1}$ and then recursively use
+(\ref{eq:3}) to find the later $\widetilde{x}_{n+m}$. This is called the \underline{\hspace{35 mm}}.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Worked Example}
+
+We have an AR(2) model $x_t = \phi_1 x_{t-1} + \phi_2 x_{t-2} + w_t$. Suppose we have observations up to the $n$th term, i.e. $x_n, x_{n-1}, \cdots$. So we wish to use the observed data and estimated AR(2) model to forecast the value of $x_{n+1}$ and $x_{n+2}$. Writing out these two values, we have
+
+\begin{eqnarray*}
+x_{n+1} &=& \phi_1 x_{n} + \phi_2 x_{n-1} + w_{n+1}, \\
+x_{n+2} &=& \phi_1 x_{n+1} + \phi_2 x_{n} + w_{n+2}.
+\end{eqnarray*}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Worked Example}
+
+To forecast $x_{n+1}$, we use the observed values of $x_{n}$ and $x_{n-1}$ and replace $w_{n+1}$ by its expected value of 0.\\
+\vspace{5mm}
+Forecasting $x_{n+2}$ poses a challenge, since it requires the unobserved value of $x_{n+1}$. We use the forecasted value of $x_{n+1}$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Framework in Forecasting}
+
+In general, the forecasting procedure for an ARMA(p,q) model is as follows:
+
+\begin{itemize}
+\item For any $w_j$ with $1 \leq j \leq n$, use the sample residual at time $j$.
+\item For any $w_j$ with $j>n$, use the expected value of $w_j$, which is 0.
+\item For any $x_j$ with $1 \leq j \leq n$, use the observed value of $x_j$.
+\item For any $x_j$ with $j>n$, use the forecasted value of $x_j$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Prediction Error}
+
+We use the infinite MA representation (\ref{eq:1}) and write
+
+\vspace{50mm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Prediction Error}
+
+Therefore, the mean-squared prediction error, or variance of the difference between the forecasted value and the true value at time $n+m$ is
+\begin{equation} \label{eq:pred_error}
+P_{n+m}^n=E(x_{n+m} -\widetilde{x}_{n+m})^2=\sigma_w^2 \sum_{j=0}^{m-1} \psi^2_j,
+\end{equation}
+
+and the standard error of the forecast error at time $n+m$ is
+
+\begin{equation} \label{eq:se_error}
+\sqrt{\hat{\sigma_w^2} \sum_{j=0}^{m-1} \psi^2_j}.
+\end{equation}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Prediction Error}
+
+\textbf{Question}: Write out the standard error of the forecast error for $m=1$ and $m=2$.
+
+\vspace{50mm}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Prediction Error}
+
+Notice that as $m$ gets larger--i.e. as we predict further into
+the future, this is \underline{\hspace{18 mm}} but essentially asymptotes. This
+means that you are getting essentially a constant prediction
+interval after a certain distance into the future, as if we do not know what was going on previously.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Prediction Error}
+
+Also, for fixed sample size $n$, the prediction errors are correlated. For $h \geq 1$,
+
+$$
+E\left\{(x_{n+m} -\widetilde{x}_{n+m})(x_{n+m+h} -\widetilde{x}_{n+m+h})\right\}=\sigma^2 \sum_{j=0}^{m-1} \psi_j \psi_{j+k}.
+$$
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Prediction Interval}
+
+For Gaussian processes, the $95\%$ prediction interval for $x_{n+m}$, the future value of the series at time $n+m$ is
+
+\begin{equation}
+x_{n+m}^{n} \pm 1.96 \sqrt{\hat{\sigma_w^2} \sum_{j=0}^{m-1} \psi_j^2}.
+\end{equation}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Worked Example}
+
+\textbf{Question}: We have an AR(1) model $x_t = 40 + 0.6 x_{t-1} + w_t$. Suppose we have $n=100$ observations, $\hat{\sigma_w^2} = 1$ and $x_{100} = 80$. We wish to forecast the values at times 101 and 102.
+
+\vspace{40mm}
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Worked Example}
+
+
+
+
+
+\end{frame}
+
+\end{document} 
