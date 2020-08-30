@@ -226,9 +226,9 @@ With stationarity, the (true) mean is constant.  We can therefore estimate the m
 $$
 \bar{x}=\frac{\sum_{t=1}^n x_t}{n}.
 $$
-This converges to $\mu$. In fact,
+This estimator is unbiased:
 $$
-E(\bar{x}) = E (\frac{\sum^n_{t=1}x_t}{n}) = \frac{1}{n} \sum^n_{t=1} E(x_t)  =\frac{1}{n} \sum^n_{t=1} \mu =\mu.
+E(\bar{x}) = E \left(\frac{\sum^n_{t=1}x_t}{n} \right) = \frac{1}{n} \sum^n_{t=1} E(x_t)  =\frac{1}{n} \sum^n_{t=1} \mu =\mu.
 $$
 \end{frame}
 
@@ -241,19 +241,23 @@ Consider the \textbf{sample autocovariance function}
 \end{equation}
 for $h=0,1,...,n-1$.  \\
 \vspace{5mm}
-For fixed $h$, all the random variables $y_t=(x_{t+h}-\bar{x})(x_{t}-\bar{x})$ have the same distribution (\textbf{due to stationarity}).  Therefore, $\frac{\sum_{t=1}^{n-h} y_t}{n}$ converges to $\gamma(h)=E(x_{h}-\mu)(x_{0}-\mu)$.
+For fixed $h$, all the random variables $y_t=(x_{t+h}-\bar{x})(x_{t}-\bar{x})$ have the same distribution (\textbf{due to stationarity}).  
+\newline
+
+One thing to notice in the sample autocovariance function (\ref{eq:samp1}) is that we divide by $n$ not $n-h$ or $n-1$. This ensures that all variance estimates (of any linear combination) are guaranteed to be positive.
+
+
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Estimating the ACF}
 
-To obtain the \textbf{sample autocorrelation} we simply scale by the variance
+To obtain the \textbf{sample autocorrelation} we simply scale by the sample variance
 \begin{equation} \label{eq:samp2}
 \hat{\rho}(h)=\frac{\hat{\gamma}(h)}{{\hat{\gamma}(0)}}.
 \end{equation}
 
-One thing to notice in the sample autocovariance function (\ref{eq:samp1}) is that we divide by $n$ not $n-h$ or $n-1$.  This ensures that if we calculate variances, they are all positive.
 
 \end{frame}
 
@@ -286,7 +290,10 @@ AR(p) & Decays to 0 exponentially\\
 \begin{frame}
 \frametitle{Sample ACF for Gaussian White Noise}
 
-When the true model is white noise $\hat{\rho}(h)$ is approximately normally distributed with zero mean and standard deviation of $1/\sqrt{n}$.
+A technical results states that when the true model is white noise, $\hat{\rho}(h)$ is approximately normally distributed with zero mean and standard deviation of $1/\sqrt{n}$.
+\newline
+
+This is very useful for conducting tests concerning hypothesis about the true autocorrelation function!
 
 \end{frame}
 

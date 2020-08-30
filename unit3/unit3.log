@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.24)  19 JUL 2020 19:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.24)  30 AUG 2020 10:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1022,13 +1022,13 @@ Package pdftex.def Info: pics/randomwalk.pdf  used on input line 158.
 ] [24
 
 ]
-<pics/acf_wn.pdf, id=1390, 505.89pt x 505.89pt>
+<pics/acf_wn.pdf, id=1388, 505.89pt x 505.89pt>
 File: pics/acf_wn.pdf Graphic file (type pdf)
 <use pics/acf_wn.pdf>
-Package pdftex.def Info: pics/acf_wn.pdf  used on input line 284.
+Package pdftex.def Info: pics/acf_wn.pdf  used on input line 288.
 (pdftex.def)             Requested size: 284.53154pt x 227.62523pt.
 
-Overfull \vbox (15.14764pt too high) detected at line 284
+Overfull \vbox (15.14764pt too high) detected at line 288
  []
 
 [25
@@ -1036,49 +1036,49 @@ Overfull \vbox (15.14764pt too high) detected at line 284
  <./pics/acf_wn.pdf>] [26
 
 ]
-<pics/acf_marriage.pdf, id=1501, 505.89pt x 505.89pt>
+<pics/acf_marriage.pdf, id=1499, 505.89pt x 505.89pt>
 File: pics/acf_marriage.pdf Graphic file (type pdf)
 <use pics/acf_marriage.pdf>
-Package pdftex.def Info: pics/acf_marriage.pdf  used on input line 299.
+Package pdftex.def Info: pics/acf_marriage.pdf  used on input line 306.
 (pdftex.def)             Requested size: 284.53154pt x 227.62523pt.
 
-Overfull \vbox (15.14764pt too high) detected at line 299
+Overfull \vbox (15.14764pt too high) detected at line 306
  []
 
 [27
 
  <./pics/acf_marriage.pdf>]
-<pics/acf_dubuque.pdf, id=1559, 505.89pt x 505.89pt>
+<pics/acf_dubuque.pdf, id=1557, 505.89pt x 505.89pt>
 File: pics/acf_dubuque.pdf Graphic file (type pdf)
 <use pics/acf_dubuque.pdf>
-Package pdftex.def Info: pics/acf_dubuque.pdf  used on input line 306.
+Package pdftex.def Info: pics/acf_dubuque.pdf  used on input line 313.
 (pdftex.def)             Requested size: 284.53154pt x 227.62523pt.
 
-Overfull \vbox (33.14764pt too high) detected at line 306
+Overfull \vbox (33.14764pt too high) detected at line 313
  []
 
 [28
 
  <./pics/acf_dubuque.pdf>]
-<pics/acf_ma1.pdf, id=1617, 505.89pt x 505.89pt>
+<pics/acf_ma1.pdf, id=1615, 505.89pt x 505.89pt>
 File: pics/acf_ma1.pdf Graphic file (type pdf)
 <use pics/acf_ma1.pdf>
-Package pdftex.def Info: pics/acf_ma1.pdf  used on input line 313.
+Package pdftex.def Info: pics/acf_ma1.pdf  used on input line 320.
 (pdftex.def)             Requested size: 284.53154pt x 227.62523pt.
 
-Overfull \vbox (15.14764pt too high) detected at line 313
+Overfull \vbox (15.14764pt too high) detected at line 320
  []
 
 [29
 
  <./pics/acf_ma1.pdf>]
-<pics/acf_ar1.pdf, id=1674, 505.89pt x 505.89pt>
+<pics/acf_ar1.pdf, id=1672, 505.89pt x 505.89pt>
 File: pics/acf_ar1.pdf Graphic file (type pdf)
 <use pics/acf_ar1.pdf>
-Package pdftex.def Info: pics/acf_ar1.pdf  used on input line 320.
+Package pdftex.def Info: pics/acf_ar1.pdf  used on input line 327.
 (pdftex.def)             Requested size: 284.53154pt x 227.62523pt.
 
-Overfull \vbox (15.14764pt too high) detected at line 320
+Overfull \vbox (15.14764pt too high) detected at line 327
  []
 
 [30
@@ -1093,39 +1093,37 @@ Overfull \vbox (15.14764pt too high) detected at line 320
 \tf@snm=\write8
 \openout8 = `unit3.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 324.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 324.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 331.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 331.
  (./unit3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 324.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 324.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 331.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 331.
 Package rerunfilecheck Info: File `unit3.out' has not changed.
 (rerunfilecheck)             Checksum: 6378338355EE1429C544953983B6B9CD;195.
  ) 
 Here is how much of TeX's memory you used:
  17997 strings out of 492982
  340690 string characters out of 6134896
- 524356 words of memory out of 5000000
+ 524790 words of memory out of 5000000
  21056 multiletter control sequences out of 15000+600000
  15317 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,19n,62p,793b,747s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-8.pfb>
-Output written on unit3.pdf (30 pages, 230786 bytes).
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmsy8.pfb>
+Output written on unit3.pdf (30 pages, 216969 bytes).
 PDF statistics:
- 1791 PDF objects out of 2073 (max. 8388607)
- 1683 compressed objects within 17 object streams
+ 1783 PDF objects out of 2073 (max. 8388607)
+ 1677 compressed objects within 17 object streams
  67 named destinations out of 1000 (max. 500000)
  127 words of extra memory for PDF output out of 10000 (max. 10000000)
 
