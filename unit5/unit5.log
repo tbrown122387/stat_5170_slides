@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.24)  26 JUL 2020 11:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.24)  6 SEP 2020 19:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1041,10 +1041,10 @@ Package pdftex.def Info: pics/acftimefitsq.pdf  used on input line 160.
 <pics/plots1.pdf, id=1912, 505.89pt x 505.89pt>
 File: pics/plots1.pdf Graphic file (type pdf)
 <use pics/plots1.pdf>
-Package pdftex.def Info: pics/plots1.pdf  used on input line 335.
+Package pdftex.def Info: pics/plots1.pdf  used on input line 338.
 (pdftex.def)             Requested size: 284.53154pt x 170.71892pt.
 
-Overfull \vbox (1.17052pt too high) detected at line 335
+Overfull \vbox (1.77884pt too high) detected at line 338
  []
 
 [30
@@ -1053,7 +1053,7 @@ Overfull \vbox (1.17052pt too high) detected at line 335
 <pics/acf1.pdf, id=1979, 505.89pt x 505.89pt>
 File: pics/acf1.pdf Graphic file (type pdf)
 <use pics/acf1.pdf>
-Package pdftex.def Info: pics/acf1.pdf  used on input line 344.
+Package pdftex.def Info: pics/acf1.pdf  used on input line 347.
 (pdftex.def)             Requested size: 284.53154pt x 170.71892pt.
  [31
 
@@ -1061,7 +1061,7 @@ Package pdftex.def Info: pics/acf1.pdf  used on input line 344.
 <pics/plots2.pdf, id=2046, 505.89pt x 505.89pt>
 File: pics/plots2.pdf Graphic file (type pdf)
 <use pics/plots2.pdf>
-Package pdftex.def Info: pics/plots2.pdf  used on input line 353.
+Package pdftex.def Info: pics/plots2.pdf  used on input line 356.
 (pdftex.def)             Requested size: 284.53154pt x 170.71892pt.
  [32
 
@@ -1069,7 +1069,7 @@ Package pdftex.def Info: pics/plots2.pdf  used on input line 353.
 <pics/acf2.pdf, id=2112, 505.89pt x 505.89pt>
 File: pics/acf2.pdf Graphic file (type pdf)
 <use pics/acf2.pdf>
-Package pdftex.def Info: pics/acf2.pdf  used on input line 360.
+Package pdftex.def Info: pics/acf2.pdf  used on input line 363.
 (pdftex.def)             Requested size: 284.53154pt x 170.71892pt.
 
 [33
@@ -1078,7 +1078,7 @@ Package pdftex.def Info: pics/acf2.pdf  used on input line 360.
 <pics/plots3.pdf, id=2178, 505.89pt x 505.89pt>
 File: pics/plots3.pdf Graphic file (type pdf)
 <use pics/plots3.pdf>
-Package pdftex.def Info: pics/plots3.pdf  used on input line 369.
+Package pdftex.def Info: pics/plots3.pdf  used on input line 372.
 (pdftex.def)             Requested size: 284.53154pt x 170.71892pt.
  [34
 
@@ -1086,7 +1086,7 @@ Package pdftex.def Info: pics/plots3.pdf  used on input line 369.
 <pics/acf3.pdf, id=2245, 505.89pt x 505.89pt>
 File: pics/acf3.pdf Graphic file (type pdf)
 <use pics/acf3.pdf>
-Package pdftex.def Info: pics/acf3.pdf  used on input line 378.
+Package pdftex.def Info: pics/acf3.pdf  used on input line 381.
 (pdftex.def)             Requested size: 284.53154pt x 170.71892pt.
  [35
 
@@ -1105,11 +1105,11 @@ Package pdftex.def Info: pics/acf3.pdf  used on input line 378.
 \tf@snm=\write8
 \openout8 = `unit5.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 401.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 401.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 404.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 404.
  (./unit5.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 401.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 401.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 404.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 404.
 Package rerunfilecheck Info: File `unit5.out' has not changed.
 (rerunfilecheck)             Checksum: 8EDCE0C3DBC16C38A168E1B0CB6249F2;234.
  ) 
@@ -1130,7 +1130,7 @@ ist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmsy8.pfb>
-Output written on unit5.pdf (37 pages, 248576 bytes).
+Output written on unit5.pdf (37 pages, 249304 bytes).
 PDF statistics:
  2485 PDF objects out of 2487 (max. 8388607)
  2358 compressed objects within 24 object streams

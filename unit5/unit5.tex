@@ -191,7 +191,7 @@ One thing we could do is to ``detrend'' with linear regression, e.g. use OLS reg
 \begin{frame}
 \frametitle{Differencing}
 
-Let $\nabla$ denote the differerncing operation. Applying $\nabla$ to $x_t$ results in
+Let $\nabla$ denote the differencing operation. Applying $\nabla$ to $x_t$ results in
 
 \begin{equation} \label{eq:first}
 \nabla x_t = x_t-x_{t-1},
@@ -249,9 +249,11 @@ which becomes a mean value $\beta_1$ plus MA(2). $\{\nabla x_t \}$ is stationary
 \frametitle{Differencing Vs Detrending}
 
 \begin{itemize}
-\item An advantage of differencing over detrending is that no parameters are estimated in the differencing operation.
-\item A disadvantage of differencing is that it does not provide an estimate of the stationary process $y_t$.
+\item An advantage of differencing over detrending is that fewer parameters are estimated after the differencing operation.
+\item A disadvantage of differencing is that it often makes an estimate of the stationary process $y_t$ more difficult.
 \end{itemize}
+
+
 
 \end{frame}
 
@@ -260,9 +262,10 @@ which becomes a mean value $\beta_1$ plus MA(2). $\{\nabla x_t \}$ is stationary
 
 \begin{itemize}
 \item If estimating $y_t$ is the goal, then \textbf{detrending} may be more appropriate.
-\item If the goal is to make the data stationary, then \textbf{differencing} may be more appropriate.
+\item If the goal is to make the data stationary without thinking about what $\mu_t$ is, then \textbf{differencing} may be more appropriate.
 \end{itemize}
 
+However, it's dangerous to generalize. You should consider several models, and derive the implications of each tool.
 \end{frame}
 
 \section{Backshift Operator}
@@ -328,7 +331,7 @@ We showed earlier that the first difference eliminates a linear trend. This is a
 \begin{frame}
 \frametitle{Example: Global Temperature}
 
-Let's look at average global temperatures from 1900 to 1997. The data are measured in deviation in degrees centigrade from the 1961-1990 average.
+Let's look at average global temperatures from 1900 to 1997. The data are measured in deviation in degrees centigrade from the 1961-1990 average. You can find the data (global.txt) in Collab.
 
 \includegraphics[width=100mm, height=60mm]{pics/plots1.pdf}
 
@@ -346,7 +349,7 @@ Let's look at average global temperatures from 1900 to 1997. The data are measur
 \begin{frame}
 \frametitle{Example: Global Temperature}
 
-Next, we look at detrended data.
+Next, we look at detrended data. These are the residuals obtained from regressing $x_t$ on $t$
 
 \includegraphics[width=100mm, height=60mm]{pics/plots2.pdf}
 
