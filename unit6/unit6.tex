@@ -19,6 +19,12 @@ xcolor=pdftex]{beamer}
 \usepackage{hyperref}
 \usepackage{multirow}
 \usepackage{bm}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
 %\setbeamertemplate{headline}{}
 \setbeamertemplate{footline}[page number]
 \newcommand\Fontvi{\fontsize{9pt}{8}\selectfont}
@@ -50,7 +56,7 @@ xcolor=pdftex]{beamer}
 \begin{frame}
 \frametitle{Readings for Unit 6}
 
-Textbook chapter 2.2 (page 64).
+Textbook chapter 2.2 (page 66).
 
 \end{frame}
 
@@ -170,7 +176,7 @@ parameters.
 \begin{frame}
 \frametitle{Choosing Frequency}
 
-If we do not have an intuition regarding the frequency, we could try various regressions with different frequencies, $\omega$, of the form $\frac{j}{n}$ for $j=0,...,\frac{n-1}{2}$.  This guarantees evenly spaced frequencies from zero to 0.5. The parameters can be estimated by
+If we do not have an intuition regarding the frequency, we could try various regressions with different frequencies, $\omega$, of the form $\frac{j}{n}$ for $j=1,\ldots,\floor{\frac{n}{2}}$.  This guarantees evenly spaced frequencies from zero to 0.5. The parameters can be estimated by
 
 \begin{eqnarray*}
 \hat{\beta}_1(j/n) &=& \frac{2}{n} \sum_{t=1}^n x_t cos( 2 \pi t j/n ).\\
@@ -182,13 +188,15 @@ If we do not have an intuition regarding the frequency, we could try various reg
 \begin{frame}
 \frametitle{Choosing Frequency}
 
-We then obtain the value of $\hat{\beta}_1^2(j/n)+\hat{\beta}_2^2(j/n)$ for all these frequencies, which can be interpreted as the amount of variation at a certain frequency. A measure of the presence of a frequency of oscillation of $j$ cycles would be
+We then obtain the value of $\hat{\beta}_1^2(j/n)+\hat{\beta}_2^2(j/n)$ for all these frequencies, which can be interpreted as the amount of variation at a certain frequency. A measure of the presence of a frequency oscillating at a frequency of $j/n$ would be
 
 \begin{equation*}
 P(j/n) = \hat{\beta}^2_1(j/n) + \hat{\beta}^2_2(j/n).
 \end{equation*}
 
-The quantity $P(j/n)$ is called the \textbf{periodogram}. Note that:
+The quantity $P(j/n)$ is called the \textbf{scaled periodogram}. 
+
+% Note that:
 
 \vspace{30mm}
 
@@ -198,9 +206,9 @@ The quantity $P(j/n)$ is called the \textbf{periodogram}. Note that:
 \frametitle{Exploratory Data Tools}
 
 \begin{itemize}
-\item Periodogram (as described in the previous slide).
-\item ACF plot. Recall that the ACF is a correlation of lags; this makes sense in a stationary time series.
-\item Lag plot. Useful with \textbf{periodic} data, this is a scatter plot that has $x_t$ on the y-axis and $x_{t-h}$ on the x-axis.
+\item Periodogram (as described in the previous slide). Works for stationary time series.
+\item ACF plot. Recall that the ACF is a correlation of lags; this makes sense in a stationary time series as well.
+\item Lag plot. Useful with \textbf{periodic} data--each scatter plot has $x_t$ on the y-axis and $x_{t-h}$ on the x-axis.
 \end{itemize}
 
 \end{frame}
