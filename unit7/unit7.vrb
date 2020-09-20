@@ -1,0 +1,8 @@
+\frametitle{Example: Cardiovascular Mortality in Los Angeles}
+
+\begin{verbatim}
+plot(t,mort)
+lines(lowess(t,mort,f=0.05),col="red")
+lines(lowess(t,mort,f=0.20),col="blue")
+\end{verbatim}
+

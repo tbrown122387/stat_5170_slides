@@ -1,0 +1,3 @@
+\beamer@sectionintoc {1}{Averaging}{6}{0}{1}
+\beamer@sectionintoc {2}{Kernel Smoothing}{18}{0}{2}
+\beamer@sectionintoc {3}{Nearest Neighbors Regression}{24}{0}{3}

@@ -31,7 +31,7 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 7: Smoothing}
-\author[STAT 5170: Applied Time Series, Unit 7]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 6]{Taylor R. Brown PhD}
 \institute{Department of Statistics, University of Virginia}
 \date{Spring 2020}
 
@@ -99,14 +99,14 @@ $$
 \beta_1 cos(2 \pi \omega  t)+\beta_2 sin(2 \pi \omega  t).
 $$
 
-In the context of smoothing, we will denote $\mu_t$ by $f_t$.
+% In the context of smoothing, we will denote $\mu_t$ by $\mu_t$.
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Averaging}
 
-One way to approximate $f_t$ is to take a moving average of the time series.  Averaging, in general, \textbf{reduces variability}.  It can also reduce ``seasonal'' fluctuations. Averaging can help in viewing \textbf{longer term trends}, because the seasonal variations will be dampened.  In general we may write a moving average as
+One way to approximate $\mu_t$ is to take a moving average of the time series.  Averaging, in general, \textbf{reduces variability}.  It can also reduce ``seasonal'' fluctuations. Averaging can help in viewing \textbf{longer term trends}, because the seasonal variations will be dampened.  In general we may write a moving average as
 
 \begin{equation} \label{eq:avg}
 m_t=\sum_{j=-k}^{k} a_j x_{t-j},
@@ -119,7 +119,7 @@ where $a_j \geq 0$ and $\sum_{j=-k}^k a_j = 1$.
 \begin{frame}
 \frametitle{Averaging}
 
-Equation (\ref{eq:avg}) can be used as an estimate of $f_t$. The smoothed value for a particular time is calculated as a \textbf{linear combination} of observations for surrounding times. \\
+Equation (\ref{eq:avg}) can be used as an estimate of $\mu_t$. The smoothed value for a particular time is calculated as a \textbf{linear combination} of observations for surrounding times. \\
 \vspace{5mm}
 Equation (\ref{eq:avg}) is sometimes also called a centered moving average, since we average with $k$ times before and $k$ times after. For example, a centered moving average of length 5 with equal weights would be the average of values at times $t-2, t-1, t, t+1, t+2$.
 
@@ -128,7 +128,7 @@ Equation (\ref{eq:avg}) is sometimes also called a centered moving average, sinc
 \begin{frame}
 \frametitle{Averaging}
 
-Smoothing using (\ref{eq:avg}) has the advantage of being adaptable to slow changes in $f_t$ across time.  The disadvantage is that there may still be a substantial amount of variability in our estimate $f_t$, and we may not know {\bf a priori} what the window size, $k$, should be.  With some data, there will be a natural window size; with others there may not be.
+Smoothing using (\ref{eq:avg}) has the advantage of being adaptable to slow changes in $\mu_t$ across time.  The disadvantage is that there may still be a substantial amount of variability in our estimate $\mu_t$, and we may not know {\bf a priori} what the window size, $k$, should be.  With some data, there will be a natural window size; with others there may not be.
 
 \end{frame}
 
@@ -149,7 +149,7 @@ Smoothing using (\ref{eq:avg}) has the advantage of being adaptable to slow chan
 \frametitle{Variance Reduction with Averaging}
 
 It was mentioned earlier that averaging reduces variation, in general. Let's look at an example. Assume that the original series $x_t$  is
-stationary, so that $var(x_t)$ is constant, denoted by $\sigma^2$. Let's create another time series
+stationary, such that $V(x_t) = \sigma^2$. Let's create another time series
 $$
 y_t=\frac{1}{3} x_{t+1}+\frac{1}{3} x_{t}+\frac{1}{3} x_{t-1}.
 $$
@@ -221,7 +221,7 @@ lines(ma52, col="blue")
 %There are a number of other methods to smooth a time series.  One popular method is kernel smoothing.
 The idea with kernel smoothing is similar to the moving average; however, the contribution to the estimate of the smooth function at a point $t$ from local points declines as a function of distance from the current point.  The smooth function is estimated by
 \begin{equation}
-\hat{f_t}=\sum_{i=1}^n w_t(i) x_j
+\hat{\mu_t}=\sum_{i=1}^n w_t(i) x_j
 \end{equation}
 where
 
@@ -240,7 +240,7 @@ A common choice for $K(.)$ is a standard normal density; in this case, $K(z) = \
 
 \vspace{5mm}
 
-An issue with kernel smoothing is the choice of $b$.  This will help determine how much of $f_t$ is determined by neighboring points. The \textbf{wider} the bandwidth, the smoother the result.
+An issue with kernel smoothing is the choice of $b$.  This will help determine how much of $\mu_t$ is determined by neighboring points. The \textbf{wider} the bandwidth, the smoother the result.
 
 \end{frame}
 
