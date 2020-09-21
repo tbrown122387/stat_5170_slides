@@ -221,12 +221,12 @@ lines(ma52, col="blue")
 %There are a number of other methods to smooth a time series.  One popular method is kernel smoothing.
 The idea with kernel smoothing is similar to the moving average; however, the contribution to the estimate of the smooth function at a point $t$ from local points declines as a function of distance from the current point.  The smooth function is estimated by
 \begin{equation}
-\hat{\mu_t}=\sum_{i=1}^n w_t(i) x_j
+\hat{\mu_t}=\sum_{i=1}^n w_t(i) x_i
 \end{equation}
 where
 
 \begin{equation} \label{eq:weight}
-w_t(i)=\frac{K\left( \frac{t-i}{b} \right)}{ \sum_{i=1}^n K\left( \frac{t-i}{b} \right)}.
+w_t(i)=\frac{K\left( \frac{t-i}{b} \right)}{ \sum_{j=1}^n K\left( \frac{t-j}{b} \right)}.
 \end{equation}
 
 In (\ref{eq:weight}), $K(.)$ is the \textbf{kernel function}, and $b$ is the \textbf{bandwidth}.

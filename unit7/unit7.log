@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.24)  20 SEP 2020 18:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.12)  20 SEP 2020 21:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1090,8 +1090,8 @@ Package rerunfilecheck Info: File `unit7.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  17986 strings out of 492982
- 340248 string characters out of 6134896
- 521885 words of memory out of 5000000
+ 340248 string characters out of 6134895
+ 521883 words of memory out of 5000000
  21042 multiletter control sequences out of 15000+600000
  15485 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1108,7 +1108,7 @@ blic/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 tt10.pfb>
-Output written on unit7.pdf (29 pages, 291345 bytes).
+Output written on unit7.pdf (29 pages, 291722 bytes).
 PDF statistics:
  1711 PDF objects out of 1728 (max. 8388607)
  1604 compressed objects within 17 object streams
