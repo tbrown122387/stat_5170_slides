@@ -31,7 +31,7 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 8: ARMA Models: AR(1)}
-\author[STAT 5170: Applied Time Series, Unit 8]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 8]{Taylor R. Brown}
 \institute{Department of Statistics, University of Virginia}
 \date{Spring 2020}
 
@@ -75,7 +75,10 @@ We have mainly discussed a number of techniques in exploratory data analysis tha
 \begin{frame}
 \frametitle{Motivation}
 
-Next, we discuss ARMA models which is a time series where the current observation depends on a linear combination of past observations plus  a ``noise'' term which is conceivably a moving average process.  We will discuss the models and some of their properties.  We will discuss how to fit these models and how to do forecasting from the models once we fit them.  We will also discuss how to select among competing models, and then we will discuss how to handle seasonal components.
+Next, we discuss ARMA models which is a time series where the current observation depends on a linear combination of past observations plus  a ``noise'' term which is possibly a moving average process.  
+\newline
+
+We will discuss the models and some of their properties.  We will discuss how to fit these models and how to do forecasting from the models once we fit them.  We will also discuss how to select among competing models, and then we will discuss how to handle seasonal components.
 
 \end{frame}
 
@@ -99,7 +102,7 @@ where $w_t$ is a Gaussian white noise process with variance $\sigma_w^2$.
 
 If we would like to include a nonzero mean we can generalize the AR(p) model (\ref{eq:ar1}) as
 $$
-x_t-\mu =\phi_1 (x_{t-1}-\mu)+ \phi_2 (x_{t-2}-\mu)+...+  \phi_p (x_{t-p}-\mu) + w_t.
+x_t-\mu =\phi_1 (x_{t-1}-\mu)+ \phi_2 (x_{t-2}-\mu)+ \cdots +  \phi_p (x_{t-p}-\mu) + w_t.
 $$
 You can think about this as having an AR(p) after transforming the data by removing a mean.
 
@@ -110,9 +113,9 @@ You can think about this as having an AR(p) after transforming the data by remov
 
 Another way to write this is
 $$
-x_t=\alpha+\phi_1 x_{t-1} + \phi_2 x_{t-2} +...+  \phi_p x_{t-p} + w_t
+x_t=\alpha+\phi_1 x_{t-1} + \phi_2 x_{t-2} + \cdots +  \phi_p x_{t-p} + w_t
 $$
-where $\alpha=\mu(1-\phi_1-...-\phi_p)$.  This is closer to how one writes a regression model.  Note that $\alpha$ will NOT be the mean of $x_t$.
+where $\alpha=\mu(1-\phi_1- \cdots -\phi_p)$.  This is closer to how one writes a regression model.  Note that $\alpha$ will NOT be the mean of $x_t$.
 
 \end{frame}
 
@@ -149,7 +152,7 @@ So, we may rewrite the $AR(p)$ model as
 
 where $\phi(B)=$ \\
 \vspace{5mm}
-This function $\phi(B)$ is called the \textbf{autoregressive operator}.  This is a ``polynomial'' in $B$.  It will be important to determine what choices of the coefficients will give us a stationary process.
+This function $\phi(B)$ is called the \textbf{autoregressive operator}.  This is a polynomial in $B$.  It will be important to determine what choices of the coefficients will give us a stationary process.
 
 \end{frame}
 
@@ -396,7 +399,7 @@ Notice that if $|1/\phi|<1$, and taking the limit we obtain
 \begin{frame}
 \frametitle{AR(1) and Causality}
 
-For the AR(1) process, we require $|\phi|<1$ for causality. We will later extend and formalize a condition on the parameters $\phi_1, \phi_2, \cdots, \phi_p$ for an AR(p) process to be causal.
+For the AR(1) process, we require $|\phi|<1$ for causality. We will later extend and formalize a condition on the parameters $\phi_1, \phi_2, \ldots, \phi_p$ for an AR(p) process to be causal.
 
 
 \end{frame}

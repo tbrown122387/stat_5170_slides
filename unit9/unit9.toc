@@ -1,0 +1,2 @@
+\beamer@sectionintoc {1}{MA(1) and Invertibility}{6}{0}{1}
+\beamer@sectionintoc {2}{ARMA Model}{15}{0}{2}

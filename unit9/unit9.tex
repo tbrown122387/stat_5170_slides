@@ -31,7 +31,7 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 9: ARMA Models: MA(1)}
-\author[STAT 5170: Applied Time Series, Unit 9]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 9]{Taylor R. Brown}
 \institute{Department of Statistics, University of Virginia}
 \date{Spring 2020}
 
@@ -50,7 +50,7 @@ xcolor=pdftex]{beamer}
 \begin{frame}
 \frametitle{Readings for Unit 9}
 
-Textbook chapter 3.1 (page 81 to 83).
+Textbook chapter 3.1 (page 83 to 86).
 
 \end{frame}
 
@@ -90,16 +90,16 @@ In the previous unit, we noted a condition for an AR(1) model to be causal. In t
 \begin{frame}
 \frametitle{MA(q) Process}
 
-Recall the MA(q) model
+The MA(q) model is defined as
 $$
-x_t=w_t + \theta_1 w_{t-1}+...+ \theta_q w_{t-q}.
+x_t=w_t + \theta_1 w_{t-1}+ \cdots + \theta_q w_{t-q}.
 $$
 We can rewrite this using backshift operator as
 \begin{equation} \label{eq:MA}
 x_t=\theta(B) w_t
 \end{equation}
 
- where $\theta(B)=1+\theta_1 B+...+\theta_q B^q$ which can be called the \textbf{moving average operator}. We already know that an MA(q) process is stationary.
+ where $\theta(B)=1+\theta_1 B+ \cdots +\theta_q B^q$ which is called the \textbf{moving average operator}. We already know that an MA(q) process is stationary.
 
 \end{frame}
 
@@ -119,15 +119,16 @@ Let's look at the $MA(1)$ model, i.e.
  \gamma(1)=\theta \sigma_w^2
  $$
  and zero for larger lags.
- Assume that we simulate from a model using $\theta=a$ and $\sigma_w^2=b$, then look at the autocovariance
- $$ \gamma(0)=b+a^2 b, \quad  \gamma(1)=a b $$.
+ 
+ % Assume that we simulate from a model using $\theta=a$ and $\sigma_w^2=b$, then look at the autocovariance
+ % $$ \gamma(0)=b+a^2 b, \quad  \gamma(1)=a b $$.
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Identifiability}
 
-\textbf{Question}: Suppose we have another MA(1) model with $\theta=1/a$ and $\sigma_w^2=a^2 b$, what is the autocovariance function for this model?
+\textbf{Question}: Suppose we have another MA(1) model with $\tilde{\theta}=1/\theta$ and $\tilde{\sigma}_w^2=\theta^2 \sigma^2_w$, what is the autocovariance function for this model?
 
 \vspace{40mm}
 \end{frame}
@@ -204,11 +205,11 @@ We could write an MA(1) as
 
 Recall that an AR(p) model is given by
  $$
- x_t=\phi_1 x_{t-1} +\phi_2 x_{t-2} + \cdots \phi_p x_{t-p} + w_t
+ x_t=\phi_1 x_{t-1} +\phi_2 x_{t-2} + \cdots + \phi_p x_{t-p} + w_t
  $$
  or in terms of backshift operator
  $$
-\phi(B) x_t =w_t, \quad \mbox{where} \quad \phi(B)=1-\phi_1 B-\phi_2 B^2-\ldots-\phi_p B^p.
+\phi(B) x_t =w_t, \quad \mbox{where} \quad \phi(B)=1-\phi_1 B-\phi_2 B^2-\cdots-\phi_p B^p.
 $$
 
 \end{frame}
@@ -222,7 +223,7 @@ x_t = w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2} + \cdots + \theta_q w_{t-q}
 $$
 or in terms of backshift operator
 $$
-x_t =  \theta(B)w_t, \quad \mbox{where} \quad \theta(B)=1+\theta_1 B+\theta_2 B^2 +\ldots + \theta_q B^q.
+x_t =  \theta(B)w_t, \quad \mbox{where} \quad \theta(B)=1+\theta_1 B+\theta_2 B^2 +\cdots + \theta_q B^q.
 $$
 
 \end{frame}
