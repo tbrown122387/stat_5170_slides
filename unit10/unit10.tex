@@ -31,9 +31,9 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 10: ARMA Models}
-\author[STAT 5170: Applied Time Series, Unit 10]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 10]{Taylor R. Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020}
+\date{Fall 2020}
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -50,7 +50,7 @@ xcolor=pdftex]{beamer}
 \begin{frame}
 \frametitle{Readings for Unit 10}
 
-Textbook chapter 3.1 (page 83 to 88).
+Textbook chapter 3.1 (pages 85 to 90).
 
 \end{frame}
 
@@ -87,17 +87,17 @@ In this unit, we formalize conditions for the existence of a unique stationary s
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}
-\frametitle{ARMA}
+\frametitle{ARMA(p,q): a working definition}
 
-A time series $\{x_t: t=...,-2,-1,0,1,2,...\}$ is ARMA(p,q) if it is stationary and
+A time series $\{x_t: t=\ldots,-2,-1,0,1,2,\ldots\}$ is ARMA(p,q) if it is stationary and
 \begin{equation*}
-x_t=\phi_1 x_{t-1}+...+\phi_p x_{t-p}+w_t+\theta_1 w_{t-1}+...+\theta_q w_{t-q}.
+x_t=\phi_1 x_{t-1}+\ldots+\phi_p x_{t-p}+w_t+\theta_1 w_{t-1}+\ldots+\theta_q w_{t-q}.
 \end{equation*}
 If $x_t$ has a nonzero mean $\mu$, then
 $$
-x_t=\alpha + \phi_1 x_{t-1}+...+\phi_p x_{t-p}+w_t+\theta_1 w_{t-1}+...+\theta_q w_{t-q}
+x_t=\alpha + \phi_1 x_{t-1}+\ldots+\phi_p x_{t-p}+w_t+\theta_1 w_{t-1}+\ldots+\theta_q w_{t-q}
 $$
-where $\alpha=\mu(1-\phi_1-...-\phi_p)$.
+where $\alpha=\mu(1-\phi_1-\ldots-\phi_p)$. $\sigma^2_w > 0$ is the variance of the white noise process, and we also assume $\phi_p \neq 0$ and $\theta_q \neq 0$ because if they were, we could write it as an ARMA($p-1$,$q-1$).
 
 \end{frame}
 
@@ -226,24 +226,24 @@ Therfore, the process $x_t=0.5 x_{t-1}-0.5 w_{t-1}+w_t$ discussed earlier is not
 \section{Causality}
 \frame{\tableofcontents[currentsection]}
 
-\begin{frame}
-\frametitle{General Linear Process}
-
-Before going into causality, we define a \textbf{general linear process}. $\{x_t\}$ is a general linear process if it can be represented as a weighted linear combination of present and past white noise terms, i.e.
-
-\begin{equation} \label{eq:linear}
-x_t = w_t + \psi_1 w_{t-1} + \psi_2 w_{t-2} + \cdots
-\end{equation}
-
-If (\ref{eq:linear}) is an infinite series, we require that $\sum_{i=1}^{\infty} \psi_i^2 < \infty$.
-
-\end{frame}
+% \begin{frame}
+% \frametitle{General Linear Process}
+% 
+% Before going into causality, we define a \textbf{general linear process}. $\{x_t\}$ is a general linear process if it can be represented as a weighted linear combination of present and past white noise terms, i.e.
+% 
+% \begin{equation} \label{eq:linear}
+% x_t = w_t + \psi_1 w_{t-1} + \psi_2 w_{t-2} + \cdots
+% \end{equation}
+% 
+% If (\ref{eq:linear}) is an infinite series, we require that $\sum_{i=1}^{\infty} \psi_i^2 < \infty$.
+% 
+% \end{frame}
 
 
 \begin{frame}
 \frametitle{Causality}
 
-To address the issue of future-dependent models, we define causality. An ARMA model is causal if it can be written as
+To address the issue of future-dependent models, we define causality. An ARMA model is {\bf causal} if it can be written as
 \begin{equation} \label{eq:causal}
 x_t=\sum_{j=0}^\infty \psi_j w_{t-j}=\psi(B) w_t
 \end{equation}
@@ -255,10 +255,11 @@ where $\psi(B)=\sum_{j=0}^\infty \psi_j  B^j$, $\sum_{j=0}^\infty |\psi_j| < \in
 \begin{frame}
 \frametitle{Causality}
 
-A causal ARMA model can be viewed as an infinite order MA as defined in (\ref{eq:causal}) or as a general linear process as defined in (\ref{eq:linear}), with dependency
-only on present and \textbf{PAST} white noise terms.   Note that if the process is
-simply $MA(q)$ then $\phi(B)$ will have zeros as coefficient
-beyond the $q+1$ term. We next state a condition for causality.
+A causal ARMA model can be viewed as an infinite order MA as defined in (\ref{eq:causal}), with dependency
+only on present and \textbf{PAST} white noise terms.   
+\newline
+
+We next state a condition for causality.
 
 
 \end{frame}
@@ -271,7 +272,7 @@ A model $x_t$ is causal iff  $\phi(z)\neq 0$ for $|z| \leq 1$.  The infinite ord
 \psi(z)=\sum_{j=0}^\infty \psi_j z^j=\frac{\theta(z)}{\phi(z)},  |z| \leq 1.
 \end{equation}
 
-Recall that this prevents the blow up we saw in simulations.
+This prevents the ``blow up" we recall from our simulations.
 
 \end{frame}
 
@@ -282,14 +283,14 @@ Another way to check for causality is that an ARMA process is causal only when t
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Causality and MA(q)}
-
-\textbf{Question}: Is an MA(q) process (in other words, an ARMA(0,q)) causal?
-
-\vspace{40mm}
-
-\end{frame}
+% \begin{frame}
+% \frametitle{Causality and MA(q)}
+% 
+% \textbf{Question}: Is an MA(q) process (in other words, an ARMA(0,q)) causal?
+% 
+% \vspace{40mm}
+% 
+% \end{frame}
 
 \section{Invertibility}
 \frame{\tableofcontents[currentsection]}
@@ -301,7 +302,9 @@ Recall also, that we have a problem of non-uniqueness for MA processes, and we d
 \begin{equation} \label{eq:invert}
 \pi(B) x_t = \sum_{j=0}^\infty \pi_j x_{t-j}=w_t
 \end{equation}
-where $\pi(B) = \sum_{j=0}^\infty \pi_j  B^j $, $ \sum_{j=0}^\infty |\pi_j| < \infty$ and $\pi_0=1$. Note that $\pi$ will have zeros beyond the $p+1$th term if the process is $AR(p)$.
+where $\pi(B) = \sum_{j=0}^\infty \pi_j  B^j $, $ \sum_{j=0}^\infty |\pi_j| < \infty$ and $\pi_0=1$. 
+
+% Note that $\pi$ will have zeros beyond the $p+1$th term if the process is $AR(p)$.
 
 \end{frame}
 
@@ -322,14 +325,14 @@ Another way to check for invertibility is that an ARMA process is invertible onl
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Invertibility and AR(p)}
-
-\textbf{Question}: Is an AR(p) process (in other words, an ARMA(p,0)) invertible?
-
-\vspace{40mm}
-
-\end{frame}
+% \begin{frame}
+% \frametitle{Invertibility and AR(p)}
+% 
+% \textbf{Question}: Is an AR(p) process (in other words, an ARMA(p,0)) invertible?
+% 
+% \vspace{40mm}
+% 
+% \end{frame}
 
 \begin{frame}
 \frametitle{Complex Roots}
@@ -340,7 +343,7 @@ $$
 a(z) = a_0 + a_1 z + \cdots + a_p z^p = a_p(z-z_1)(z-z_2)\cdots(z-z_p),
 $$
 
-where $z_1, \cdots, z_p \in \mathbb{C}$ are the roots of $a(z)$. If the coefficients $a_0, a_1, \cdots, a_p$ are all real, then the roots are all either real or come in \textbf{complex conjugate pairs}.
+where $z_1, \ldots, z_p \in \mathbb{C}$ are the roots of $a(z)$. If the coefficients $a_0, a_1, \cdots, a_p$ are all real, then the roots are all either real or come in \textbf{complex conjugate pairs}.
 
 \end{frame}
 
