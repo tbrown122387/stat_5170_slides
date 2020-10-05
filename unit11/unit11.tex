@@ -31,9 +31,9 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 11: ARMA Autocorrelation and Partial Autocorrelation Functions}
-\author[STAT 5170: Applied Time Series, Unit 11]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 11]{Taylor R. Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020}
+\date{Fall 2020}
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -61,6 +61,7 @@ Textbook chapter 3.3.
 \item ARMA(p,q)
 \item Condition for causality
 \item Condition for invertibility
+\item Condition for redundant parameters (shared roots)
 \end{enumerate}
 \end{frame}
 
@@ -84,7 +85,7 @@ In this unit we will study the autocorrelation and partial autocorrelation
 \end{frame}
 
 \section{ACF for MA(q) Processes}
-\frame{\tableofcontents[currentsection]}
+%\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
 \frametitle{MA(q) Process}
@@ -166,8 +167,10 @@ Now we discuss causal ARMA($p,q$) model
 $$
 \phi(B) x_t = \theta(B) w_t,
 $$
-where the roots of $\phi(z)$ are outside the unit circle. Since
-the model is causal, we have the MA($\infty$) representation
+where the roots of $\phi(z)$ are outside the unit circle. Ths means for $|z| \le 1$, $|\phi(z)| > 0$, which means $|\phi^{-1}(z)| < \infty$. 
+\newline
+
+We have the MA($\infty$) representation
 \begin{eqnarray}\label{eq:3}
 x_t = \sum^\infty_{j=0} \psi_j w_{t-j},  \quad \mbox{where} \quad
 \psi(z) = \frac{\theta(z)}{\phi(z)} = \sum^\infty_{j=0} \psi_j z^j.
@@ -187,58 +190,127 @@ $$
 
 \end{frame}
 
-%\begin{frame}
-%\frametitle{$\psi$-weights for Causal ARMA(p,q)}
+\begin{frame}
+\frametitle{Autocovariance for Causal ARMA(p,q)}
 
-%\textbf{Question}: Given functions $\theta(z)$ and $\phi(z)$, how to
-%obtain the coefficients $\psi_j$ in (\ref{eq:3})?
+We won't provide an explicit formula for the ACF of an ARMA(p,q), but we will derive the system of equations you'll need to solve to get it. 
+%\newline
 
-%\vspace{40mm}
+Let $h\ge 0$, and $\theta_0 = 1$:
+\begin{align*}
+\gamma_X(h) &= \text{Cov}(X_{t+h}, X_t) \\
+&= \text{Cov}(\sum_{i=1}^p \phi_i X_{t+h-i} + \sum_{j=0}^q \theta_j W_{t+h-j}, X_t)\\
+&= \sum_{i=1}^p \phi_i \text{Cov}(X_{t+h-i} , X_t) + \sum_{j=0}^q \theta_j \text{Cov}\left( W_{t+h-j}, X_t\right) \\
+&= \sum_{i=1}^p \phi_i \gamma_X(h-i) + \sum_{j=0}^q \theta_j \text{Cov}\left( W_{t+h-j}, \sum^\infty_{k=0} \psi_k W_{t-k}\right)
+\end{align*}
 
-%\end{frame}
-
+\end{frame}
 
 
 \begin{frame}
-\frametitle{Autocovariance for Causal AR(1)}
+\frametitle{ACVF and ACF for Causal ARMA(p,q)}
 
-To motivate the idea, consider a causal AR(1) model $x_t=\phi_1
+Let $h\ge 0$, and $\theta_0 = 1$:
+\begin{align*}
+\gamma_X(h) &= \sum_{i=1}^p \phi_i \gamma_X(h-i) + \sum_{j=0}^q \theta_j \text{Cov}\left( W_{t+h-j}, \sum^\infty_{k=0} \psi_k W_{t-k}\right) \\
+&= \sum_{i=1}^p \phi_i \gamma_X(h-i) + \sum_{j=0}^q\sum^\infty_{k=0}  \theta_j\psi_k \sigma^2_W 1( t+h-j = t-k) \\
+&= \sum_{i=1}^p \phi_i \gamma_X(h-i) + \sigma^2_W \sum_{j=h}^q \theta_j\psi_{j-h} 
+\end{align*}
+
+$0 \le j < \infty$, $k \ge 0$, and $k = j - h$. Dividing through by $\gamma(0)$ will give the equations for solving $\rho(\cdot)$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ACVF and ACF for Causal ARMA(1,1)}
+
+For a causal ARMA(p,q), $h\ge 0$, :
+$$
+\gamma_X(h) = \sum_{i=1}^p \phi_i \gamma_X(h-i) + \sigma^2_W \sum_{j=h}^q \theta_j\psi_{j-h} 
+$$
+
+Let's consider an ARMA(1,1). When $h \ge 2$, we have
+$$
+\gamma(h) = \phi_1 \gamma_X(h-1)
+$$
+This means $\gamma(h) = \phi_1^h c$ for some unknown $c \in \mathbb{R}$. To find $c$ we consider the ``initial conditions" or when $h = 0,1$.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{ACVF and ACF for Causal ARMA(1,1)}
+
+For a causal ARMA(p,q), $h\ge 0$, :
+$$
+\gamma_X(h) = \sum_{i=1}^p \phi_i \gamma_X(h-i) + \sigma^2_W \sum_{j=h}^q \theta_j\psi_{j-h} 
+$$
+
+Still considering an ARMA(1,1), when $h = 0,1$, we have
+\begin{eqnarray}
+\gamma(0) = \phi_1 \gamma(-1) + \sigma^2_W\sum_{j=0}^1 \theta_j \psi_{j} \\
+\gamma(1) = \phi_1 \gamma(0)  + \sigma^2_W \theta_1 
+\end{eqnarray}
+
+This yields (dropping the subscripts from $\theta_1$ and $\phi_1$)
+$$
+\rho(h) = \frac{(1 + \theta\phi)(\phi + \theta)}{(1 + 2 \theta\phi + \theta^2)}\phi^{h-1}
+$$
+Notice that there is only one part dependent on $h$!
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{ACVF for Causal AR(1)}
+
+For a causal ACVF,
+$$
+\gamma_X(h) = \sum_{i=1}^p \phi_i \gamma_X(h-i) + \sigma^2_W \sum_{j=h}^q \theta_j\psi_{j-h} 
+$$
+
+Consider a causal AR(P) model $x_t=\phi_1
 x_{t-1}+w_t$.  Then
 
-\vspace{40mm}
+$$
+\gamma_X(h) = \sum_{i=1}^p \phi_i \gamma_X(h-i) 
+$$
 
-\end{frame}
+$\gamma_X(h)$ will never cut-off to $0$ for any $h$. This makes it difficult to identify what $p$ is.
 
-\begin{frame}
-\frametitle{Autocovariance for Causal AR(1)}
-
-Here, we have used causality: $x_{t-2}$ only depends on
-$w_{t-2},w_{t-3},\ldots$ and hence is independent of $w_{t-1}$
-and $w_t$. Consequently, $cov(w_{t-1},x_{t-2})=0$ and
-$cov(w_t,x_{t-2})=0$. The ACF for an AR(1) model is very
-different from an MA(1) model whose ACF is zero at lag 2.
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Autocovariance for Causal AR(1)}
-
-\textbf{Question}: Why is $\gamma(2)\ne 0$ for an AR(1) process?
-
-\vspace{50mm}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Removing Connection}
-
-Consider the following,
 
 \vspace{40mm}
 
-because of causality. Thus, after removing the
-connection $x_{t-1}$, the covariance between $x_t$ and
-$x_{t-2}$ is zero.
+\end{frame}
+
+\begin{frame}
+\frametitle{A new idea for causal AR(p) models}
+
+We'll need this trick in the following slide...
+\newline
+
+Note we can write $X_t = \sum_{i=0}^{\infty} \psi_i W_{t-i}$
+\newline
+
+Causality means $x_{t-2}$, for example, only depends on $w_{t-2},w_{t-3},\ldots$ and hence is uncorrelated with $w_{t-1}$ and $w_t$. 
+
+For $s > t$, check $\text{Cov}(w_{s},x_{t})= \sum_{i=0}^{\infty} \psi_j \overbrace{\text{Cov}(w_{s},w_{t-i})}^{0}$. 
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{A new idea for causal AR(p) models}
+
+For a causal AR(1) model, the $\gamma_X$ and $\rho_X$ functions don't zero out past $p$, so instead consider 
+\begin{align*}
+\text{Cov}(x_{t+2} - \hat{x}_{t+2},x_{t} - \hat{x}_t) &= \text{Cov}(x_{t+2} - \phi x_{t+1},x_{t} - \phi x_{t+1}) \\
+&= \text{Cov}(w_{t+2}, x_{t} - \phi x_{t+1}) \\
+&= \text{Cov}(w_{t+2}, x_{t}) - \phi \text{Cov}(w_{t+2}, x_{t+1}) \\
+&= 0
+\end{align*}
+
+So, when considering the relationship between $x_{t+2}$ and $x_t$, we first remove the linear dependence on $x_{t+1}$!
 
 \end{frame}
 
@@ -246,7 +318,10 @@ $x_{t-2}$ is zero.
 \frametitle{Notation}
 
 One way to remove linear connections is through \textbf{linear
-regression}. Let $\hat{x}_{t+h}$ denote the regression of $x_{t+h}$ on
+regression}. 
+\newline
+
+Let $\hat{x}_{t+h}$ denote the regression of $x_{t+h}$ on
 $\{x_{t+h-1},x_{t+h-2},\ldots,x_{t+1}\}$, which we write as
 \begin{equation}
 \hat{x}_{t+h} = \beta_1 x_{t+h-1} + \beta_2 x_{t+h-2} + \cdots + \beta_{h-1} x_{t+1}.
@@ -292,24 +367,44 @@ $\{x_{t+1},\cdots,x_{t+h-1}\}$, on each, removed.
 \end{frame}
 
 \begin{frame}
-\frametitle{Partial Autocorrelation Function}
 
-Now we consider PACF of a causal AR(1) model: $x_t=\phi
-x_{t-1}+w_t$, with $|\phi|<1$. By definition,
-$\phi_{11}=corr(x_1,x_0)=\rho(1)=\phi$. To calculate
-$\phi_{22}$, consider the regression of $x_{t+2}$ on $x_{t+1}$, say
-$\hat{x}_{t+2}=\beta x_{t+1}$.
+
+\frametitle{Partial Autocorrelation Function: AR(1) example}
+
+Let's go back to the example from a few slides ago, and try to calculate the PACF of a causal AR(1) model: $x_t=\phi
+x_{t-1}+w_t$, with $|\phi|<1$.
+\newline
+
+By definition, $\phi_{11}=corr(x_1,x_0)=\rho(1)=\phi$. 
+\newline
+
+We wrote
+\begin{align*}
+\phi_{22} &:= \text{Cov}(x_{t+2} - \hat{x}_{t+2},x_{t} - \hat{x}_t) \\
+&= 0
+\end{align*}
+
+...but why are $\hat{x}_{t+2} = \hat{x}_t = \phi x_{t+1}$? 
 
 \end{frame}
+
 
 \begin{frame}
-\frametitle{Partial Autocorrelation Function}
+\frametitle{Partial Autocorrelation Function: AR(1) example}
 
-Recall in linear regression we seek to minimize the error sum of squares (SSE). In this setting, we seek to minimize
+To calculate $\phi_{22}$, consider the regression of $x_{t+2}$ on $x_{t+1}$, say $\hat{x}_{t+2}=\beta x_{t+1}$.
+\newline
 
-\vspace{50mm}
+We choose $\beta$ to minimize 
+$$
+E\left[ \left( x_{t+2} - \beta x_{t+1}\right)^2 \right] = \gamma_X(0) - 2\beta \gamma_X(1) + \beta^2 \gamma_X(0).
+$$
+
+Taking the derivative and setting that equal to $0$ yields $\beta = \phi$.
 
 \end{frame}
+
+
 
 \begin{frame}
 \frametitle{Partial Autocorrelation Function}
@@ -347,9 +442,9 @@ $$
 \frametitle{Summary}
 
 \begin{itemize}
-\item The ACF of MA($q$) model cuts at lag $q$. The PACF of an AR($p$) model cuts at lag $p$.
+\item The ACF of MA($q$) model cuts off after lag $q$. The PACF of an AR($p$) model cuts off after lag $p$.
 \item Identification of an MA(q) model is best done with ACF; identification of an AR(p) model is best done with PACF.
-\item The PACF between $x_t$ and $x_{t-h}$ is the conditional correlation between $x_t$ and $x_{t-h}$. It is conditional on $x_{t-h+1}, \cdots, x_{t-1}$, the set of observations that come \textbf{between time $t$ and $t-h$}.
+\item The PACF between $x_t$ and $x_{t-h}$ is the correlation between $x_t - \hat{x}_t$ and $x_{t-h} - \hat{x}_{t-h}$. Think of it as taking the correlation between the residuals from two regression models. The dependence on all intermediate variables is removed. 
 \end{itemize}
 
 \end{frame}
