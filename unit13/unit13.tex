@@ -31,9 +31,9 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 13: ARMA Estimation}
-\author[STAT 5170: Applied Time Series, Unit 13]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 13]{Taylor Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020}
+\date{Fall 2020}
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -50,7 +50,7 @@ xcolor=pdftex]{beamer}
 \begin{frame}
 \frametitle{Readings for Unit 13}
 
-Textbook chapter 3.5 (pages 113 to 121).
+Textbook chapter 3.5 (pages 115 to 121).
 
 \end{frame}
 
@@ -84,47 +84,69 @@ In this unit, we explore a couple of ways to estimate the parameters for ARMA mo
 \section{Method of Moments Estimation}
 \frame{\tableofcontents[currentsection]}
 
-\begin{frame}
-\frametitle{ARMA Estimation}
+%
+%
+%\begin{frame}
+%\frametitle{ARMA Estimation}
+%
+%Let's assume that we have a causal and intvertible ARMA model
+%$$
+%\phi(B)  X_t = \theta(B) w_t,
+%$$
+%where the white noise $w_t$ has variance $\sigma^2_w$,
+%$$
+%\phi(B) = 1-\phi_1 B - \cdots - \phi_p B^p \quad
+%\mbox{and} \quad
+%\theta(B) = 1+\theta_1 B + \cdots+\theta_q B^q.
+%$$
+%Given $n$ observations $x_1,x_2,\ldots,x_n$, we are interested
+%in estimating the parameters
+%$\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q$ and
+%$\sigma^2_w$. Initially we assume that the orders $p$ and $q$
+%are known.
+%\end{frame}
+%
 
-Let's assume that we have an ARMA model (which is of course causal and invertible)
-$$
-\phi(B)  X_t = \theta(B) w_t,
-$$
-where the white noise $w_t$ has variance $\sigma^2_w$,
-$$
-\phi(B) = 1-\phi_1 B - \cdots - \phi_p B^p \quad
-\mbox{and} \quad
-\theta(B) = 1+\theta_1 B + \cdots+\theta_q B^q.
-$$
-Given $n$ observations $x_1,x_2,\ldots,x_n$, we are interested
-in estimating the parameters
-$\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q$ and
-$\sigma^2_w$. Initially we assume that the orders $p$ and $q$
-are known.
-\end{frame}
+
 
 \begin{frame}
 \frametitle{Method of Moments}
 
-Let's start with the method of moments (MOM) estimation. The idea behind this is to equate population moments to sample moments and then solving for the parameters in terms of the sample moments.
+Let's start with the method of moments (MOM) estimation. The idea behind this is to equate population moments to sample moments and then solve for the parameters in terms of the sample moments.
+\newline
 
+We re-use a lot of the same equations from the previous section!
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{AR Estimation}
+
+Let's first assume that we have a causal AR(p) model
+$$
+\phi(B)  (x_t - \mu) = w_t,
+$$
+where the white noise $w_t$ has variance $\sigma^2_w$,
+$$
+\phi(B) = 1-\phi_1 B - \cdots - \phi_p B^p .
+$$
+Given $n$ observations $x_1,x_2,\ldots,x_n$, we are interested in estimating the parameters $\phi_1,\ldots,\phi_p$ and $\sigma^2_w$. Initially we assume that the order $p$ is known.
 \end{frame}
 
 \begin{frame}
-\frametitle{Method of Moments: Toy Example}
+\frametitle{AR Estimation}
 
+We'll assume again without loss of generality (WLOG) that $\mu = 0$. Why?
+\newline
 
+$E[x_t] = \mu$ can always be estimated with the first sample moment $\bar{x}$. 
+\newline
 
+If $\mu \neq 0$, then transform your data before estimating as follows:
+$\tilde{x}_t = x_t - \bar{x}$.
 \end{frame}
 
-%\begin{frame}
-%\frametitle{Method of Moments: Example}
-
-%\textbf{Question}: Consider $x_1, \cdots, x_n$ iid normal random variables with mean $\mu$ and variance $\sigma^2$. What are the MOM estimators of $\mu$ and $\sigma^2$?
-
-%\vspace{50mm}
-%\end{frame}
 
 
 \begin{frame}
@@ -132,112 +154,60 @@ Let's start with the method of moments (MOM) estimation. The idea behind this is
 
 The method of moments works well when estimating causal AR(p) models. We consider the causal AR($p$) model
 \begin{eqnarray}\label{eq:1}
-x_t=\phi_1 x_{t-1} + \cdots + \phi_p x_{t-p} + w_t.
+x_t= \phi_1 x_{t-1} + \cdots + \phi_p x_{t-p} + w_t.
 \end{eqnarray}
 
-Multiply both sides of (\ref{eq:1}) by $x_{t-h}$, and taking expectations, we obtain
+For $h=1,\ldots,p$, multiply both sides of (\ref{eq:1}) by $x_{t-h}$, and take expectations:
 
 \begin{eqnarray}\label{eq:2}
-E (x_t x_{t-h})  = \hspace{50mm}
+\gamma(h)  = \phi_1 \gamma(h-1) + \cdots + \phi_p \gamma(h-p)
 \end{eqnarray}
 
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Yule-Walker Estimation for AR(p)}
-
-By definition of the autocovariance function,
-
-\vspace{40mm}
-
-We consider two cases.
-
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Yule-Walker Estimation for AR(p)}
-
-\textbf{Case I}: $h \geq 1$. By causality, $x_{t-h}$ only depends on present and past white noise terms, $w_{t-h}, w_{t-h-1}, \cdots,$. Thus, $\mbox{E}(w_t x_{t-h}) = 0$. Then (\ref{eq:2}) becomes
-
-\begin{equation} \label{eq:3}
-\gamma(h) = \hspace{50mm}
-\end{equation}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Yule-Walker Estimation for AR(p)}
-
-\textbf{Case II}: $h = 0$. Then
-
-\begin{eqnarray} \label{eq:4}
-\mbox{E}(w_t x_t) &=& \hspace{50mm} \nonumber \\
-                  &=& \hspace{50mm} \nonumber \\
-                  &=& \hspace{50mm}
-\end{eqnarray}
-
-due to causality $\mbox{E}(w_t x_{t-j}) = 0$ for $j \geq 1$.
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Yule-Walker Estimation for AR(p)}
-
-\textbf{Case II (continued)}: Subbing (\ref{eq:4}) into (\ref{eq:2}), we obtain
-
-\begin{eqnarray} \label{eq:5}
-\gamma(0) &=& \hspace{50mm} \nonumber \\
-          &=& \hspace{50mm}
+When $h=0$, we do the same thing and get
+\begin{eqnarray}
+\sigma^2_w  = \gamma(0) - \phi_1 \gamma(1) + \cdots + \phi_p \gamma(p)
 \end{eqnarray}
 
 \end{frame}
 
+
 \begin{frame}
 \frametitle{Yule-Walker Estimation for AR(p)}
 
-We combine (\ref{eq:3}) and (\ref{eq:5}) to obtain the \textbf{Yule-Walker equations}
+We call these the \textbf{Yule-Walker equations}
 
 \begin{eqnarray*}
-\gamma(h) &=&  \phi_1 \gamma(h-1) + \phi_2 \gamma(h-2) + \cdots + \phi_p \gamma(h-p),  \\
+\gamma(h) &=&  \phi_1 \gamma(h-1) + \phi_2 \gamma(h-2) + \cdots + \phi_p \gamma(h-p), \hspace{5mm} h=1,\ldots,p  \\
 \sigma_{w}^2 &=& \gamma(0) - \phi_1 \gamma(1) - \phi_2 \gamma(2) - \cdots - \phi_p \gamma(p).
 \end{eqnarray*}
 
+We can also write them in matrix notation that should look familiar:
+$$
+\Gamma_p \phi = \gamma_p \hspace{10mm} \sigma^2_w = \gamma(0) - \phi' \gamma_p
+$$
+
+where $\Gamma_p = \{\gamma(k-j) \}_{j,k=1}^p$ is a $p \times p$ matrix, $\phi = (\phi_1, \cdots, \phi_p)^{\prime}$ is a $p \times 1$ vector, and $\gamma_p = (\gamma(1), \cdots, \gamma(p))^{\prime}$ is a $p \times 1$ vector.
+
+
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Yule-Walker Estimation for AR(p)}
 
-In matrix notation, the Yule-Walker equations are
-
+Using method of moments, put hat signs on everything, and then solve for the desired parameters:
+$$
+\Gamma_p \phi = \gamma_p \hspace{10mm} \sigma^2_w = \gamma(0) - \phi' \gamma_p
+$$
+yields
 \begin{equation*}
-\boldsymbol{\Gamma}_p \boldsymbol{\phi} = \boldsymbol{\gamma}_p
+\hat{\phi} = \hat{\Gamma}_p^{-1} \hat{\gamma}_p
 \end{equation*}
 
 and
 
 \begin{equation*}
-\sigma_w^2 = \gamma(0) - \boldsymbol{\phi^{\prime}\gamma}_p,
-\end{equation*}
-
-where $\boldsymbol{\Gamma}_p = \{\gamma(k-j) \}_{j,k=1}^p$ is a $p \times p$ matrix, $\boldsymbol{\phi} = (\phi_1, \cdots, \phi_p)^{\prime}$ is a $p \times 1$ vector, and $\boldsymbol{\gamma}_p = (\gamma(1), \cdots, \gamma(p))^{\prime}$ is a $p \times 1$ vector.
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Yule-Walker Estimation for AR(p)}
-
-Using method of moments, we replace $\gamma(h)$ with $\hat{\gamma(h)}$ and solve
-
-\begin{equation*}
-\boldsymbol{\hat{\phi}} = \hat{\boldsymbol{\Gamma}}_p^{-1} \hat{\boldsymbol{\gamma}}_p
-\end{equation*}
-
-and
-
-\begin{equation*}
-\hat{\sigma}_w^2 = \hat{\gamma}(0) - \hat{\boldsymbol{\gamma}}_p^{\prime} \hat{\boldsymbol{\Gamma}}_p^{-1} \hat{\boldsymbol{\gamma}}_p.
+\hat{\sigma}_w^2 = \hat{\gamma}(0) - \hat{\gamma}_p^{\prime} \hat{\Gamma}_p^{-1} \hat{\gamma}_p.
 \end{equation*}
 
 \end{frame}
@@ -245,20 +215,27 @@ and
 \begin{frame}
 \frametitle{Yule-Walker Estimation for AR(p)}
 
-By factoring $\hat{\gamma}(0)$, the Yule-Walker estimates are
+One more small move: divide through by $\hat{\gamma}(0)$ before solving, so that we have formulas in terms of ACFs.
+\newline
+
+$$
+\frac{1}{\gamma(0)} \Gamma_p \phi = \frac{1}{\gamma(0)}\gamma_p \hspace{10mm} \sigma^2_w = \gamma(0) - \phi' \gamma_p
+$$
+gives us
 
 \begin{equation} \label{eq:s1}
-\boldsymbol{\hat{\phi}} = \hat{\bm{R}}_p^{-1} \hat{\boldsymbol{\rho}}_p
+\hat{\phi} = \hat{R}_p^{-1} \hat{\rho}_p
 \end{equation}
 
 and
 
 \begin{eqnarray} \label{eq:s2}
-\hat{\sigma}_w^2 &=& \hat{\gamma}(0) \left[ 1 - \hat{\boldsymbol{\rho}}_p^{\prime} \hat{\bm{R}}_p^{-1} \hat{\boldsymbol{\rho}}_p \right] \nonumber \\
-                 &=& \hat{\gamma}(0) \left[ 1 - \hat{\boldsymbol{\rho}}_p^{\prime} \boldsymbol{\hat{\phi}} \right],
+\hat{\sigma}_w^2 &=& \hat{\gamma}(0) \left[ 1 - \hat{\rho}_p^{\prime} \hat{R}_p^{-1} \hat{\rho}_p \right] \nonumber 
 \end{eqnarray}
+%\\
+%                 &=& \hat{\gamma}(0) \left[ 1 - \hat{\boldsymbol{\rho}}_p^{\prime} \boldsymbol{\hat{\phi}} \right],
 
-where $\bm{\hat{R}}_p = \{\hat{\rho}(k-j) \}_{j,k=1}^p$ is a $p \times p$ matrix and $\boldsymbol{\hat{\rho}}_p = (\hat{\rho}(1), \cdots, \hat{\rho}(p))^{\prime}$ is a $p \times 1$ vector.
+where $\hat{R}_p = \{\hat{\rho}(k-j) \}_{j,k=1}^p$ is a $p \times p$ matrix and $\hat{\rho}_p = (\hat{\rho}(1), \cdots, \hat{\rho}(p))^{\prime}$ is a $p \times 1$ vector.
 
 \end{frame}
 
@@ -308,14 +285,39 @@ where $\sigma_w^2 = 1$. For the sample, $\hat{\gamma}(0) = 7.69697$, $\hat{\rho}
 \begin{frame}
 \frametitle{Simulation Example}
 
+The data had $\hat{\rho}(1) = .849$, $\hat{\rho}(2) = .519$ and $\hat{\gamma}(0) = 8.903$
+\begin{align*}
+\hat{\phi} &= \hat{R}_p^{-1} \hat{\rho}_p \\
+&= \begin{bmatrix}
+1 & .849 \\
+.849 & 1
+\end{bmatrix}^{-1}
+\begin{bmatrix}
+.849 \\
+.519
+\end{bmatrix} \\
+&= 
+\begin{bmatrix}
+1.463 \\
+-.723
+\end{bmatrix}
+\end{align*}
 
-
+Also, 
+\begin{align*}
+\hat{\sigma}_w^2 &= \hat{\gamma}(0) \left[ 1 - \hat{\rho}_p^{\prime} \hat{R}_p^{-1} \hat{\rho}_p \right] \\
+&= \hat{\gamma}(0) \left[ 1 - \hat{\rho}_p^{\prime} \hat{\phi} \right] \\
+&=  8.903 * (1 - \begin{bmatrix} .849 & .519 \end{bmatrix} \begin{bmatrix} 1.463 \\ -.723\end{bmatrix}) = 1.187
+\end{align*}
 \end{frame}
+
+
+
 
 \begin{frame}
 \frametitle{Fish Population Example}
 
-In Unit 11, we looked at the ACF and PACF of the time series from ``recruit.dat", which contains data on fish population in the central Pacific Ocean. The numbers represent the number of new fish for each month in the years 1950-1987. We decided that an AR(2) model is most appropriate.
+In Unit 11, we looked at the ACF and PACF of the time series from ``recruit.dat", which contains data on fish population in the central Pacific Ocean. The numbers represent the number of new fish for each month in the years 1950-1987. 
 \end{frame}
 
 \begin{frame}
@@ -324,6 +326,7 @@ In Unit 11, we looked at the ACF and PACF of the time series from ``recruit.dat"
 \includegraphics[width=100mm, height=80mm]{recruit.pdf}
 
 \end{frame}
+
 
 \begin{frame}[fragile]
 \frametitle{Fish Population Example}
@@ -364,10 +367,10 @@ lines(rec.pred$pred + rec.pred$s, col=4, lty=2)
 \begin{frame}
 \frametitle{Method of Moments Estimation for MA(q)}
 
-Consider an MA(1) process $x_t = w_t + \theta w_{t-1}$. We know that
+Consider an invertible MA(1) process $x_t = w_t + \theta w_{t-1}$, with $|\theta| < 1$. We know that
 
 $$
-\rho(1) = -\frac{\theta}{1 + \theta^2}.
+\rho(1) = \frac{\theta}{1 + \theta^2}.
 $$
 
 Using method of moments, we equate $\hat{\rho}(1)$ to $\rho(1)$ and solve a quadratic equation in $\theta$.
@@ -378,23 +381,24 @@ Using method of moments, we equate $\hat{\rho}(1)$ to $\rho(1)$ and solve a quad
 \begin{frame}
 \frametitle{Method of Moments Estimation for MA(q)}
 
-The invertible solution is
+The invertible solution(s) is(are)
 
 $$
-\hat{\theta} = \frac{-1 + \sqrt{1 - 4 \hat{\rho}(1)^2}}{2 \hat{\rho}(1)}.
+\hat{\theta} = \frac{1 \pm \sqrt{1 - 4 \hat{\rho}(1)^2}}{2 \hat{\rho}(1)}.
 $$
-
-If $\hat{\rho}(1)= \pm 0.5$, real solutions exist, $\mp 1$, neither is invertible. \\
-If $\hat{\rho}(1)>0.5$, no real solutions exist, the method of moments fails to yield an estimator of $\theta$.
+\begin{itemize}
+\item If $|\hat{\rho}(1)| < 0.5$, two solutions exist, so we pick the invertible one. 
+\item If $\hat{\rho}(1)= \pm 0.5$, $\hat{\theta} = \pm 1$. No invertible solution. 
+\item If $\hat{\rho}(1)>0.5$, no real solutions exist: the method of moments fails to yield an estimator of $\theta$.
+\end{itemize}
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Method of Moments Estimation for MA(q)}
 
-For higher order MA(q) models, the method of moments quickly gets complicated. The equations are non-linear in $\theta_1, \cdots, \theta_q$, so numerical methods need to be used. \\
-\vspace{5mm}
-It turns out that for MA(q) models, method of moments produces poor estimates, in general.
+For higher order MA(q) models, the method of moments quickly gets complicated. The equations are non-linear in $\theta_1, \cdots, \theta_q$, so numerical methods need to be used. 
+
 \end{frame}
 
 \section{Maximum Likelihood Estimation}
@@ -420,20 +424,15 @@ We seek the likelihood
 \begin{eqnarray}\label{eq:likelihood}
 L(\mu,\phi,\sigma^2_w) = f_{\mu,\phi,\sigma^2_w}(x_1,x_2,\ldots,x_n).
 \end{eqnarray}
-Intuitively speaking, the likelihood function (\ref{eq:likelihood})
-$L(\mu,\phi,\sigma^2_w)$ is formed from the joint probability distribution of the observed data $x_1,x_2,\ldots,x_n$ as a function of the parameters $\mu,\phi,\sigma^2_w$.
+The likelihood function (\ref{eq:likelihood}) $L(\mu,\phi,\sigma^2_w)$ is functionally equivalent to the joint probability distribution of the observed data $x_1,x_2,\ldots,x_n$. 
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Maximum Likelihood Estimation}
 
-For given data, you can
-think of the likelihood as a function of the parameters.
-Since we've actually observed the data $x_1,x_2,\ldots,x_n$, we
-can find parameters $(\mu,\phi,\sigma^2_w)$ to maximize the
-likelihood $L(\mu,\phi,\sigma^2_w)$. This is the basic idea
-behind maximum likelihood estimation.
+For a given data set, think of the likelihood as a function of the parameters (not the data). Since we've already observed the data $x_1,x_2,\ldots,x_n$, we
+can find parameters $(\mu,\phi,\sigma^2_w)$ to maximize the likelihood $L(\mu,\phi,\sigma^2_w)$. This is the basic idea behind maximum likelihood estimation.
 
 \end{frame}
 
@@ -441,137 +440,175 @@ behind maximum likelihood estimation.
 \begin{frame}
 \frametitle{Likelihood Function}
 
-Recall that, for two random variables $X$
-and $Y$, the \textbf{joint density} $f_{X,Y}(x,y)$ of $(X,Y)$ can be
-written as
-\begin{eqnarray*}
-f_{X,Y}(x,y)=f_X(x) f_{Y|X}(y|x),
-\end{eqnarray*}
-where $f_X(x)$ is the density function of $X$, and
-$f_{Y|X}(y|x)$ is the conditional density function of $Y$ given
-$X=x$. Similar idea also carries over to multivariate random
-variables.
+We will use the following:
+\begin{align*}
+L(\mu,\phi,\sigma^2_w) &= f(x_1, \ldots, x_t) \\
+&= f(x_1) f(x_2 | x_1) f(x_3 | x_2, x_1) \cdots f(x_t | x_{t-1}, x_{t-2}, \ldots, x_1) \\
+&= f(x_1) f(x_2 | x_1) f(x_3 | x_2) \cdots f(x_t | x_{t-1}) 
+\end{align*}
+
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Likelihood Function}
 
-Since $w_t$ are iid normal random variables with variance
-$\sigma^2_w$, in the case of (\ref{eq:ar1}), we have
+These are all the same:
+$$
+x_t =\mu+\phi(x_{t-1}-\mu) + w_t \hspace{5mm} w_t \sim \text{Normal}(0, \sigma^2_w)
+$$
+
 \begin{eqnarray*}
-x_2|x_1 =\mu+\phi(x_1-\mu) + w_2|x_1 \sim N(\mu+\phi(x_1-\mu),\sigma^2_w)
+x_t|x_{t-1}  \sim \text{Normal}(\mu+\phi(x_{t-1}-\mu),\sigma^2_w)
 \end{eqnarray*}
 and
 \begin{eqnarray*}
- f_{x_2|x_1}(x_2|x_1) = \frac{1}{\sqrt{2\pi \sigma_w^2}}
-\exp \Big \{-\frac{[x_2-\mu-\phi(x_1-\mu)]^2}{2\sigma^2 _w} \Big \}.
-\end{eqnarray*}
-
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Likelihood Function}
-
-Similarly,
-\begin{eqnarray*}
-f_{x_t|x_{t-1}}(x_t|x_{t-1}) = \frac{1}{\sqrt{2\pi \sigma_w^2}}
+ f_{x_t|x_{t-1}}(x_t|x_{t-1}) = \frac{1}{\sqrt{2\pi \sigma_w^2}}
 \exp \Big \{-\frac{[x_t-\mu-\phi(x_{t-1}-\mu)]^2}{2\sigma^2 _w} \Big \}.
 \end{eqnarray*}
 
+
 \end{frame}
+
+%\begin{frame}
+%\frametitle{Likelihood Function}
+%
+%Similarly,
+%\begin{eqnarray*}
+%f_{x_t|x_{t-1}}(x_t|x_{t-1}) = \frac{1}{\sqrt{2\pi \sigma_w^2}}
+%\exp \Big \{-\frac{[x_t-\mu-\phi(x_{t-1}-\mu)]^2}{2\sigma^2 _w} \Big \}.
+%\end{eqnarray*}
+%
+%\end{frame}
 
 \begin{frame}
 \frametitle{Likelihood Function}
 
 We have
-\begin{eqnarray}\label{eq:cle}
-L(\mu,\phi,\sigma^2_w) &=& f_{x_1}(x_1) \times f_{x_2|x_1}(x_2|x_1) \times \cdots \times f_{x_n|x_{n-1}}(x_n|x_{n-1}) \cr
-&=& f_{x_1}(x_1) (2\pi \sigma^2_w)^{-(n-1)/2} \exp \Big \{ -\frac{S(\mu,\phi)}{2\sigma^2_w} \Big \},
-\end{eqnarray}
+\begin{align*}\label{eq:cle}
+L(\mu,\phi,\sigma^2_w) &= f_{x_1}(x_1) \times f_{x_2|x_1}(x_2|x_1) \times \cdots \times f_{x_n|x_{n-1}}(x_n|x_{n-1}) \cr \\
+&= f_{x_1}(x_1) (2\pi \sigma^2_w)^{-(n-1)/2} \times \\
+&\hspace{10mm}\exp \Big \{ -\frac{ \sum^n_{t=2} [x_t-\mu-\phi(x_{t-1}-\mu)]^2 }{2\sigma^2_w} \Big \}.
+\end{align*}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Likelihood Function: what is $f_{x_1}(x_1)$?}
+
+In midterm 1, we assumed 
+$$
+x_1 \sim \text{Normal}\left(\mu, \frac{\sigma^2}{1-\phi^2} \right)
+$$
+because that would allow all other time points to have the same marginal distribution.
+\newline
+
+Here's another rationalization: assume this model is causal ($|\phi|<1$), and pretend you have an infinite history of data (impossible in practice).
+\newline
+
+The causal representation $x_1=\mu+\sum^\infty_{j=0} \phi^j
+w_{1-j}$ is. Take expectations on both sides, and take the variance on both sides. 
+\newline
+
+Since $w_t$ are iid normal, $x_1$ is a normal with mean $\mu$ and variance $\sigma^2_w/(1-\phi^2)$.
+
+%, and
+%\begin{eqnarray*}
+%f_{x_1}(x_1)=\frac{1}{\sqrt{2\pi \sigma^2_w/(1-\phi^2)}}
+%\exp \Big \{- \frac{(x_1-\mu)^2}{2\sigma^2_w/(1-\phi^2)} \Big \}
+%\end{eqnarray*}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Likelihood Function}
+
+The likelihood function is
+\begin{align*}
+L(\mu,\phi,\sigma^2_w) &= f_{x_1}(x_1) (2\pi \sigma^2_w)^{-(n-1)/2} \exp \Big \{ -\frac{ \sum^n_{t=2} [x_t-\mu-\phi(x_{t-1}-\mu)]^2 }{2\sigma^2_w} \Big \}\\
+&= (2\pi \sigma^2_w)^{-n/2}(1 - \phi^2)^{1/2} \exp \Big \{ -\frac{ S(\mu,\phi) }{2\sigma^2_w} \Big \},
+\end{align*}
 where
 \begin{eqnarray*}
-S(\mu,\phi) = \sum^n_{t=2} [x_t-\mu-\phi(x_{t-1}-\mu)]^2.
+S(\mu,\phi) = (1-\phi^2)(x_1 - \mu)^2 \sum^n_{t=2} [x_t-\mu-\phi(x_{t-1}-\mu)]^2.
 \end{eqnarray*}
 
 \end{frame}
 
 
-\begin{frame}
-\frametitle{Likelihood Function}
 
-Note that for the AR(1) model (\ref{eq:ar1}), we have the
-causal representation $x_1=\mu+\sum^\infty_{j=0} \phi^j
-w_{1-j}$. Since $w_t$ are iid normal, $x_1$ is a normal with
-mean $\mu$ and variance $\sigma^2_w/(1-\phi^2)$, and
-\begin{eqnarray*}
-f_{x_1}(x_1)=\frac{1}{\sqrt{2\pi \sigma^2_w/(1-\phi^2)}}
-\exp \Big \{- \frac{(x_1-\mu)^2}{2\sigma^2_w/(1-\phi^2)} \Big \}
-\end{eqnarray*}
+
+%
+%\begin{frame}
+%\frametitle{Likelihood Function}
+%
+%Thus, for given data $x_1,x_2,\ldots,x_n$, we can find
+%$(\mu,\phi,\sigma^2_w)$ to maximize the likelihood
+%$L(\mu,\phi,\sigma^2_w)$. 
+%
+%It is worth pointing out that it is more common to consider the log-likelihood
+%\begin{eqnarray*}
+%\ell(\mu,\phi,\sigma^2) = \log L(\mu,\phi,\sigma^2).
+%\end{eqnarray*}
+%
+%Maximizing log-likelihoods may not always have a closed-form solution. \textbf{Numerical methods} (e.g.: Newton-Raphson, Fisher scoring) are needed.
+%
+%\end{frame}
+
+
+\begin{frame}
+\frametitle{The Log-likelihood Function}
+
+It is worth pointing out that it is more common to consider the log-likelihood
+\begin{align*}
+\ell(\mu,\phi,\sigma^2) &= \log L(\mu,\phi,\sigma^2) \\
+&= \log \left[ (2\pi \sigma^2_w)^{-n/2}(1 - \phi^2)^{1/2} \exp \Big \{ -\frac{ S(\mu,\phi) }{2\sigma^2_w} \Big \} \right] \\
+&= -\frac{n}{2} \log (2\pi \sigma^2_w) + \frac{1}{2}\log (1 - \phi^2) -\frac{ S(\mu,\phi) }{2\sigma^2_w} 
+\end{align*}
+
+Numerically more stable, and the derivatives are easier to calculate.
+%Maximizing log-likelihoods may not always have a closed-form solution. \textbf{Numerical methods} (e.g.: Newton-Raphson, Fisher scoring) are needed.
 
 \end{frame}
 
+
 \begin{frame}
-\frametitle{Likelihood Function}
+\frametitle{The variance estimator}
 
-Thus, for given data $x_1,x_2,\ldots,x_n$, we can find
-$(\mu,\phi,\sigma^2_w)$ to maximize the likelihood
-$L(\mu,\phi,\sigma^2_w)$ in (\ref{eq:cle}). It is worth
-pointing out that it is more common to consider the log-likelihood
-\begin{eqnarray*}
-\ell(\mu,\phi,\sigma^2) = \log L(\mu,\phi,\sigma^2).
-\end{eqnarray*}
+The variance estimator can be obtained after you get the other estimators:
+\begin{align*}
+\frac{d}{d\sigma^2}L(\mu,\phi,\sigma^2_w) &= \frac{d}{d\sigma^2}\left[-\frac{n}{2} \log (2\pi \sigma^2_w) + \frac{1}{2}\log (1 - \phi^2) -\frac{ S(\mu,\phi) }{2\sigma^2_w} \right]\\
+&= -\frac{n}{2 \sigma^2_w} +  S(\mu,\phi)\left(\frac{1}{\sigma^2_w}\right)^2 
+\end{align*}
 
-Maximizing log-likelihoods may not always have a closed-form solution. \textbf{Numerical methods} (e.g.: Newton-Raphson, Fisher scoring) needed.
+Setting that equal to $0$, replacing $\sigma^2_w$ with $\hat{\sigma}^2_w$, and solving for $\hat{\sigma}^2_w$ gives us
+$$
+\hat{\sigma}^2_w = \frac{S(\mu,\phi)}{n}
+$$
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Properties of Maximum Likelihood Estimators}
 
-Maximum likelihood estimators are approximately unbiased and normally distributed, for large $n$.
+\begin{frame}
+\frametitle{The variance estimator}
+
+The estimates for $\mu$ and $\sigma^2$ is more complicated. Taking the derivative with respect to these, and setting the equations equal to $0$ yields something that cannot be solved analytically. It's usually accomplished with a numerical procedure (e.g. Newton-Raphson or Fisher scoring).
+
 \end{frame}
+
 
 \section{Comparison of MOM and MLE}
 \frame{\tableofcontents[currentsection]}
 
 
 \begin{frame}
-\frametitle{Properties of Method of Moment Estimators}
+\frametitle{Properties of ML Estimators}
 
-Advantages:
-
-\begin{itemize}
-\item Efficient (\textbf{low variance estimates}) for AR(p) models.
-\item Nice closed-form solutions for AR(p) models.
-\end{itemize}
-
-Disadvantages:
-
-\begin{itemize}
-\item Poor efficiency for MA(q) models.
-\end{itemize}
+\includegraphics[width=100mm]{screenshot.png}
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Properties of Maximum Likelihood Estimators}
 
-Advantages:
-
-\begin{itemize}
-\item Efficient.
-\item Even if $x_t$ is not Gaussian, the asymptotic distribution of the MLE is the same when $x_t$ is Gaussian.
-\end{itemize}
-
-Disadvantages:
-
-\begin{itemize}
-\item Difficult optimization problem.
-\item Need to choose a good starting point.
-\end{itemize}
-
-\end{frame}
 
 \end{document} 

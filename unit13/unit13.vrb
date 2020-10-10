@@ -1,0 +1,9 @@
+\frametitle{Fish Population Example}
+
+\begin{verbatim}
+rec.pred <- predict(rec.yw, n.ahead=24)
+ts.plot(rec, rec.pred$pred, col=1:2)
+lines(rec.pred$pred - rec.pred$s, col=4, lty=2)
+lines(rec.pred$pred + rec.pred$s, col=4, lty=2)
+\end{verbatim}
+
