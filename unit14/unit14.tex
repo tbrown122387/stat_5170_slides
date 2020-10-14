@@ -31,9 +31,9 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 14: Building ARIMA Models}
-\author[STAT 5170: Applied Time Series, Unit 14]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 14]{Taylor R. Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020}
+\date{Fall 2020}
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -130,7 +130,7 @@ If a mean does exist then we can write
 \begin{equation}
 \phi(B)(1-B)^d x_t = \alpha + \theta(B) w_t
 \end{equation}
-where $\alpha=\mu(1-\phi_1-...-\phi_p)$.
+where $\alpha=\mu(1-\phi_1- \cdots -\phi_p)$.
 
 \end{frame}
 
@@ -193,8 +193,8 @@ We'll explore some techniques for identifying and estimating non-seasonal ARIMA 
 \begin{itemize}
 \item The elements in the ARIMA model are typically specified, in the following order: AR order, differencing, MA order.
 \item If $d=0$, we may call the model an ARMA(p,q) model.
-\item If $q=0$, we have an AR(p) model.
-\item If $p=0$, we have an MA(q) model.
+\item If $d=0$ and $q=0$, we have an AR(p) model.
+\item If $d=0$ and $p=0$, we have an MA(q) model.
 \end{itemize}
 
 \end{frame}
@@ -282,7 +282,7 @@ The ACF and PACF should be used together. Recall that
 
 \begin{itemize}
 \item If the ACF and PACF decay slowly (do not decay exponentially), then the time series is likely to be not stationary (was differencing performed earlier?).
-\item If all the autocorrelations are insignificant for $h \geq 1$, than the series is random (e.g. shifted white noise).
+\item If all the autocorrelations are insignificant for $h \geq 1$, than the series is (possibly-shifted) white noise.
 \item If all the autocorrelations are insignificant for $h \geq 1$ for a first difference, then we may have a \textbf{random walk}.
 \end{itemize}
 
@@ -384,7 +384,7 @@ Sometimes you may have more than one set of values for $p,d,q$ from exploratory 
 \begin{itemize}
 \item Simpler model.
 \item Standard errors of forecasts.
-\item Smaller MSE, AIC, etc.
+\item AIC, AICc, BIC etc.
 \end{itemize}
 
 
@@ -403,7 +403,7 @@ Two different ARIMA models can be nearly equivalent when converted to an infinit
 \begin{frame}
 \frametitle{Worked Example: US GNP}
 
-To tie everything in, we'll look at an example on how to build an ARIMA model. (Don't worry you'll get chances in the homework $\ddot\smile$) We will use data on US gross national product in billions of chained 1996 dollars. The observations are quarterly data from 1947 to 2002.
+To tie everything in, we'll look at an example on how to build an ARIMA model. We will use data on US gross national product in billions of chained 1996 dollars. The observations are quarterly data from 1947 to 2002.
 
 \end{frame}
 

@@ -1,0 +1,14 @@
+\frametitle{Worked Example: Recap}
+
+\begin{tabular}{c|c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+      & \textbf{AR(1)} & \textbf{MA(2)} & \textbf{ARMA(2,2)}\\
+			\hline
+      Est Coeffs& All significant & All significant & All significant\\
+      Diagnostics & Ok & Ok & Ok\\
+      AIC & -6.44694 & -6.450133 & \textbf{-6.462032}\\
+			AICc & -6.446693 & -6.449637 & \textbf{-6.46078}\\
+			BIC & \textbf{-6.400958} & -6.388823 & -6.370067\\
+    \end{tabular}
+		
+\textbf{Question:} Which model will you choose? What else could be done to help us decide which model to choose?
+
