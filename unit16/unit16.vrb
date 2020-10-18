@@ -1,0 +1,12 @@
+\frametitle{Worked Example: Beer Production}
+
+Check the significance of the parameters for ARIMA$(1,1,1) \times (0,1,1)_4$.
+
+\begin{verbatim}
+     Estimate     SE t.value p.value
+ar1   -0.3307 0.1361 -2.4289   0.018
+ma1   -0.7181 0.0958 -7.4942   0.000
+sma1  -0.5768 0.1165 -4.9493   0.000
+\end{verbatim}
+
+\textbf{Comments?}

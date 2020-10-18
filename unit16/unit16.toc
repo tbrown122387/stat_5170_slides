@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Seasonal Trend}{6}{0}{1}
+\beamer@sectionintoc {2}{SARIMA Model}{11}{0}{2}
+\beamer@sectionintoc {3}{Building SARIMA Models}{18}{0}{3}
+\beamer@sectionintoc {4}{Worked Example}{29}{0}{4}
