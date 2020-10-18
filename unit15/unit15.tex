@@ -32,9 +32,9 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 15: Seasonal ARMA Models}
-\author[STAT 5170: Applied Time Series, Unit 15]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 15]{Taylor R. Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020}
+\date{Fall 2020}
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -53,7 +53,7 @@ xcolor=pdftex]{beamer}
 \begin{frame}
 \frametitle{Readings for Unit 15}
 
-Textbook chapter 3.9 page 145 to 149 (example 3.47).
+Textbook chapter 3.9 page 148 to 151 (example 3.47).
 
 \end{frame}
 
@@ -95,11 +95,11 @@ We can write the pure seasonal ARMA model, ARMA$(P,Q)_s$, using backshift operat
 \end{equation}
 where
 $$
-\Phi_P(B^s)=1-\Phi_1 B^s-\Phi_2B^{2s}-...-\Phi_P B^{Ps}
+\Phi_P(B^s)=1-\Phi_1 B^s-\Phi_2B^{2s}-\cdots-\Phi_P B^{Ps}
 $$
 and
 $$
-\Theta_Q(B^s)=1+\Theta_1 B^s+\Theta_2B^{2s}+...+\Theta_Q B^{Qs}.
+\Theta_Q(B^s)=1+\Theta_1 B^s+\Theta_2B^{2s}+\cdots+\Theta_Q B^{Qs}.
 $$
 The first polynomial is the seasonal autoregressive operator and the second is the seasonal moving average operator.
 
@@ -196,7 +196,7 @@ for $|\Phi_1|<1$.
 The autocovariance would then be (for $h>0, h\neq12k$)
 
 $$
-\gamma(h)=E(x_t x_{t-h})=E \Big ( \sum_{k=0}^\infty \Phi_1^k w_{t-12k} \Big )\Big ( \sum_{k=0}^\infty \Phi_1^k w_{t-h-12k} \Big )=0.
+\gamma(h)=E(x_t x_{t-h})=E\left[ \Big ( \sum_{k=0}^\infty \Phi_1^k w_{t-12k} \Big )\Big ( \sum_{k=0}^\infty \Phi_1^k w_{t-h-12k} \Big )\right]=0.
 $$
 
 \end{frame}
@@ -212,7 +212,7 @@ $$
 \frametitle{ACF for Seasonal MA, AR}
 
 When looking at ACF and PACF plots, we are going
-to use the same criteria as before but looking only at the
+to use the same criteria as before but look only at the
 lags that are a multiple of the period.  A pure seasonal MA(1)
 should have a significant value for the ACF at the
 lag of the period and roughly zero otherwise.  A pure seasonal
@@ -310,7 +310,7 @@ The properties that we observe for pure seasonal ARMA models are not strictly tr
 \begin{frame}
 \frametitle{Multiplicative Seasonal ARMA Models}
 
-\textbf{Question}: How does the ACF of ARMA$(0,1) \times (1,0)_{12}$ look like?
+\textbf{Question}: How does the ACF of ARMA$(0,1) \times (1,0)_{12}$ look?
 
 \vspace{50mm}
 

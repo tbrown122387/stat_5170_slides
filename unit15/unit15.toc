@@ -1,0 +1,3 @@
+\beamer@sectionintoc {1}{SARMA Model}{6}{0}{1}
+\beamer@sectionintoc {2}{Exploratory Data Analysis}{10}{0}{2}
+\beamer@sectionintoc {3}{Multiplicative Seasonal ARMA Models}{24}{0}{3}
