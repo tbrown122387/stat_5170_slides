@@ -32,9 +32,9 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 18: Spectral Density}
-\author[STAT 5170: Applied Time Series, Unit 18]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 18]{Taylor Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020} %ADD LECTURE 21 FROM ADITYA
+\date{Fall 2020} %ADD LECTURE 21 FROM ADITYA
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -69,7 +69,7 @@ Textbook chapter 4.2 (until page 175).
 \begin{frame}
 \frametitle{This Unit}
 \begin{enumerate}
-\item Spectral Density: Fourier Transformation of Autocovariance.
+\item The Spectral Density: a Fourier Transform of the Autocovariance.
 \item Properties of Spectral Density.
 \end{enumerate}
 \end{frame}
@@ -84,38 +84,137 @@ The spectral density is a Fourier transform of the autocovariance function $\gam
 \section{Spectral Density}
 \frame{\tableofcontents[currentsection]}
 
-\begin{frame}
-\frametitle{Transformation}
 
-Consider a transformation from Celsius to Fahrenheit: $F = 1.8C + 32$. \\
-\vspace{5mm}
-To transform back, we use $C = \frac{F-32}{1.8}$. We don't really lose any information during the transformation.
+
+% \begin{frame}
+% \frametitle{Transformation}
+% 
+% Consider a transformation from Celsius to Fahrenheit: $F = 1.8C + 32$. \\
+% \vspace{5mm}
+% To transform back, we use $C = \frac{F-32}{1.8}$. We don't really lose any information during the transformation.
+% 
+% \end{frame}
+
+
+
+\begin{frame}
+\frametitle{Trigonometric Properties}
+
+Recall that
+
+\begin{itemize}
+\item a cosine function is \textbf{even}, i.e. $\cos(-\theta) = \cos(\theta)$.
+\item a sine function is \textbf{odd}, i.e. $\sin(-\theta) = -\sin(\theta)$.
+\end{itemize}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Fourier Transform}
+\frametitle{Euler's Formula}
 
+Recall Euler's formula:
 
-We move between a function on the integers $...,-2,-1,0,1,2,...$ and a function in the frequency space. So, for
-a function $a_t, t=...,-2,-1,0,1,2,...$ we can move to the
-frequency space by taking the Fourier transform
-\begin{eqnarray*}
-A(\omega) = \sum_{t=-\infty}^{\infty} a_t e^{-2 \pi i \omega t}, -0.5\leq \omega \leq 0.5.
-\end{eqnarray*}
+\begin{equation} \label{eq:euler}
+e^{i \alpha} = \cos (\alpha) + i \sin (\alpha).
+\end{equation}
 
-We can then go backwards using $a_t=\int_{-0.5}^{0.5} A(\omega) e^{2
-\pi i \omega t} d\omega$ for each $t$.
+Consequently,
+
+\begin{equation} \label{eq:ecos}
+\cos(\alpha) = \frac{e^{-i \alpha} + e^{i \alpha}}{2}
+\end{equation}
+
+and
+
+\begin{equation} \label{eq:esin}
+\sin(\alpha) = \frac{e^{i \alpha} - e^{-i \alpha}}{2i}.
+\end{equation}
 
 \end{frame}
 
+
+% \begin{frame}
+% \frametitle{Fourier Transform}
+% 
+% 
+% We move between a function on the integers $...,-2,-1,0,1,2,...$ and a function in the frequency space. So, for
+% a function $a_t, t=...,-2,-1,0,1,2,...$ we can move to the
+% frequency space by taking the Fourier transform
+% \begin{eqnarray*}
+% A(\omega) = \sum_{t=-\infty}^{\infty} a_t e^{-2 \pi i \omega t}, -0.5\leq \omega \leq 0.5.
+% \end{eqnarray*}
+% 
+% We can then go backwards using $a_t=\int_{-0.5}^{0.5} A(\omega) e^{2
+% \pi i \omega t} d\omega$ for each $t$.
+% 
+% \end{frame}
+
+
 \begin{frame}
-\frametitle{Spectral Density}
+\frametitle{Motivating Example}
+
+Here is an example of a spectral representation of an autocovariance function.
+\newline
+
+Let $x_t = U_1 \cos(2\pi \frac{1}{4} t) + U_2 \sin(2 \pi \frac{1}{4} t)$.  Then
+\begin{align*}
+\gamma(h) &= \sigma^2 \cos (2 \pi \frac{1}{4} h) \\
+&= \sigma^2 \frac{ e^{-i 2 \pi \frac{1}{4} h } + e^{i 2 \pi \frac{1}{4} h } }{2} \\
+&= \int_{-1/2}^{1/2} e^{ i 2 \pi \omega h} d F(\omega)
+\end{align*}
+
+where 
+$$
+F(\omega) = 
+\begin{cases}
+0 & \omega < - \frac{1}{4}\\ 
+\sigma^2/2 & - \frac{1}{4} \le \omega < \frac{1}{4}\\
+\sigma^2 & \omega \ge \frac{1}{4}
+\end{cases}
+$$
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Proposition}
+
+This $F(\omega)$ *always exists* for *all* stationary processes. 
+\newline
+
+Let $x_t$ be stationary with an autocovariance function $\gamma(h)$. Then there exists a unique monotonically increasing function $F(\omega)$, called the {\bf spectral distribution function}, that satisfies
+\begin{enumerate}
+\item $F(-\infty) = F(-\frac{1}{2}) = 0$ for $\omega \le 1/2$
+\item $F(\infty) = F(1/2) = \gamma(0)$ for $\omega \ge 1/2$  
+\item $\gamma(h) = \int_{-1/2}^{1/2} e^{2\pi i \omega h} dF(\omega)$.
+\end{enumerate}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Example}
+
+For ARMA models, we will also have a spectral representation of the autocovariance function, but the integral will be a smoother blend without any jumps:
+
+$$
+\gamma(h) = \int_{-1/2}^{1/2} e^{ i 2 \pi \omega h} d F(\omega) = \int_{-1/2}^{1/2} e^{ i 2 \pi \omega h} f(\omega) d \omega
+$$
+
+More specifically...
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Spectral *Density*}
+
 
 If the autocovariance function, $\gamma(h)$, of a stationary process satisfies $\sum_{h=-\infty}^{\infty}  |\gamma(h)| < \infty$, then it has the representation
 
 \begin{equation} \label{eq:inverse}
-\gamma(h) = \int^{1/2}_{-1/2} f(\omega) e^{2\pi i\omega h} d\omega, \quad h=0,\pm 1,\pm 2,\ldots.
+\gamma(h) = \int^{1/2}_{-1/2}  e^{2\pi i\omega h} f(\omega) d\omega, \quad h=0,\pm 1,\pm 2,\ldots.
 \end{equation}
 
 (\ref{eq:inverse}) is called the \textbf{inverse transform of the spectral density}. The \textbf{spectral density} is denoted by
@@ -159,42 +258,6 @@ An interpretation of (\ref{eq:var}) is that the ``total" integrated spectral den
 
 \end{frame}
 
-
-\begin{frame}
-\frametitle{Trigonometric Properties}
-
-Recall that
-
-\begin{itemize}
-\item a cosine function is \textbf{even}, i.e. $\cos(-\theta) = \cos(\theta)$.
-\item a sine function is \textbf{odd}, i.e. $\sin(-\theta) = -\sin(\theta)$.
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Euler's Formula}
-
-Recall Euler's formula:
-
-\begin{equation} \label{eq:euler}
-e^{i \alpha} = \cos (\alpha) + i \sin (\alpha).
-\end{equation}
-
-Consequently,
-
-\begin{equation} \label{eq:ecos}
-\cos(\alpha) = \frac{e^{-i \alpha} + e^{i \alpha}}{2}
-\end{equation}
-
-and
-
-\begin{equation} \label{eq:esin}
-\sin(\alpha) = \frac{e^{i \alpha} - e^{-i \alpha}}{2i}.
-\end{equation}
-
-
-\end{frame}
 
 \begin{frame}
 \frametitle{Derivation of Inverse Transformation of Spectral Density}
