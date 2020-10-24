@@ -32,9 +32,9 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 17: Introduction to Spectral Analysis}
-\author[STAT 5170: Applied Time Series, Unit 17]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 17]{Taylor Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020}
+\date{Fall 2020}
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -59,13 +59,13 @@ Textbook chapter 4.1.
 
 
 
-\begin{frame}
-\frametitle{Last Unit}
-\begin{enumerate}
-\item Seasonal Differencing.
-\item Building the Seasonal ARIMA model.
-\end{enumerate}
-\end{frame}
+% \begin{frame}
+% \frametitle{Last Unit}
+% \begin{enumerate}
+% \item Seasonal Differencing.
+% \item Building the Seasonal ARIMA model.
+% \end{enumerate}
+% \end{frame}
 
 \begin{frame}
 \frametitle{Motivation}
@@ -101,7 +101,7 @@ Idea: decompose a stationary time series $\{x_t\}$ into a \textbf{combination} o
 
 \begin{itemize}
 \item Identify \textbf{dominant frequencies} within the data.
-\item Periodogram: \textbf{total variance} at a given sequence of frequencies.
+\item Periodogram: \textbf{sample variance} at different of frequencies.
 \item Power spectrum: \textbf{population} version of the periodogram.
 \end{itemize}
 
@@ -112,12 +112,18 @@ Idea: decompose a stationary time series $\{x_t\}$ into a \textbf{combination} o
 \begin{frame}
 \frametitle{Spectral Analysis}
 
-Time (period) and frequency are inversely related.  With quarterly data, there are four data points per year (cycle).  This corresponds to 0.25 cycles per data point.  The notation is
+Period and frequency are inversely related.  
+\newline
+
+With quarterly data, there are four data points per year (cycle).  The frequency ($\omega$) 0.25 cycles per data point.  
+\newline
+
+The period is
 $$
-T=\frac{1}{\omega}
+\frac{1}{\omega}
 $$
 
-where $\omega$ is the frequency.
+or in this case, $4$.
 
 \end{frame}
 
@@ -154,7 +160,11 @@ Notice that at the discrete time points $0, 1, 2, 3, \cdots$ the two cosine curv
 \begin{frame}
 \frametitle{Aliasing}
 
-This is why we typically focus on frequencies between 0 and 0.5. Frequencies above 0.5 are aliased with a frequency between 0 and 0.5, and are hence indistinguishable.
+This is why we typically focus on frequencies between 0 and 0.5. 
+\newline
+
+Higher frequencies may still be present, but they will appear as lower frequencies.
+
 
 \end{frame}
 
@@ -241,6 +251,13 @@ A consequence of the representation given by (\ref{eq:gen}) is that any \textbf{
 
 Let's derive the moments of (\ref{eq:gen}).
 
+\begin{align*}
+E[x_t] &= E[\sum_{k=1}^{q} U_{k1} \cos(2 \pi \omega_k t) + U_{k2} \sin(2 \pi \omega_k t)] \\
+&= \sum_{k=1}^{q} E[U_{k1} \cos(2 \pi \omega_k t) + U_{k2} \sin(2 \pi \omega_k t)] \\
+&= \sum_{k=1}^{q} E[U_{k1} \cos(2 \pi \omega_k t)] +E[ U_{k2} \sin(2 \pi \omega_k t)] \\
+&= \sum_{k=1}^{q} E[U_{k1}] \cos(2 \pi \omega_k t) +E[ U_{k2}] \sin(2 \pi \omega_k t) \\
+&= 0
+\end{align*}
 \vspace{50mm}
 
 \end{frame}
@@ -249,11 +266,28 @@ Let's derive the moments of (\ref{eq:gen}).
 \frametitle{Periodic Time Series}
 
 
+\begin{flalign*}
+\gamma(h) &= \text{Cov}\left( x_{t+h}, x_t \right) \\
+&= \\
+&= \\
+&= \\
+&= \\
+&= \sum_{k=1}^q \sigma^2_k \cos\left(2 \pi \omega_k h \right)
+\end{flalign*}
+
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Periodic Time Series}
+
+$$
+\gamma(h) = \sum_{k=1}^q \sigma^2_k \cos\left(2 \pi \omega_k h \right)
+$$
+When we plug in $h=0$, we get
+$$
+\text{Var}(x_t) = \sum_{k=1}^q \sigma^2_k
+$$
 
 
 
@@ -263,15 +297,34 @@ Let's derive the moments of (\ref{eq:gen}).
 \frametitle{Periodic Time Series}
 
 \textbf{Question}: What is the implication of these derivations?
+\pause
 
-\vspace{50mm}
+\begin{equation}
+x_t = \sum_{k=1}^{q} U_{k1} \cos(2 \pi \omega_k t) + U_{k2} \sin(2 \pi \omega_k t)
+\end{equation}
+
+where $U_{k1}^2 + U_{k2}^2 = A_k^2$. Also $\text{Var}[U_{k1} + U_{k2}] = E[U_{k1}^2] + E[U_{k2}^2] = 2 \sigma_k^2$. 
+\pause
+
+Think of it as a regression model:
+
+\begin{equation}
+x_t = \sum_{k=1}^{q} \beta_{k1} \cos(2 \pi \omega_k t) + \beta_{k2} \sin(2 \pi \omega_k t)
+\end{equation}
+
+$\hat{\beta}_{k1}^2 + \hat{\beta}_{k2}^2$ is the scaled periodogram, it helps estimate $\sigma^2_k$ which is the population parameter corresponding to a realized $A_k^2$.
+
 
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Next...}
 
-Spectral Density: Fourier transformation of the autocovariance.
+Computing the Fourier transform of the data is faster than fitting a linear regression. 
+\newline
+
+Before we discuss that Fourier transform, we'll discuss what happens when you Fourier transform the autocovariance function. This is the ``spectral density."
 
 
 \end{frame}
