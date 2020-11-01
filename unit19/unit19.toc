@@ -1,2 +1,2 @@
-\beamer@sectionintoc {1}{Autocovariance Generating Function}{5}{0}{1}
+\beamer@sectionintoc {1}{Spectral Density of Causal ARMA models}{5}{0}{1}
 \beamer@sectionintoc {2}{Rational Spectrum}{10}{0}{2}
