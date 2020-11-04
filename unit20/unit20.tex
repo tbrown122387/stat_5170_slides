@@ -31,10 +31,10 @@ xcolor=pdftex]{beamer}
 \newcommand{\backupend}{
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
-\title{Unit 20: Discrete Fourier Transform and Periodogram}
-\author[STAT 5170: Applied Time Series, Unit 20]{Jeffrey Woo}
+\title{Unit 20: The Discrete Fourier Transform and The Periodogram}
+\author[STAT 5170: Applied Time Series, Unit 20]{Taylor R. Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020} %USE ADITYA LECTURE 23
+\date{Fall 2020} %USE ADITYA LECTURE 23
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -62,7 +62,6 @@ Textbook chapter 4.3.
 \begin{frame}
 \frametitle{Last Unit}
 \begin{enumerate}
-\item Autocovariance generating function for ARMA processes.
 \item Rational spectrum representation for ARMA processes.
 \end{enumerate}
 \end{frame}
@@ -98,35 +97,75 @@ d(\omega_j)=n^{-1/2} \sum_{t=1}^n x_t e^{-2 \pi i \omega_j t}
 where $\omega_j= j/n, j=0,1,\ldots,n-1$, and the frequencies $\omega_j = j/n$ are called the Fourier or \textbf{fundamental frequencies}.
 \end{frame}
 
+
+\begin{frame}
+\frametitle{Discrete Fourier Transform}
+
+Another way to write it:
+\begin{align*}
+d(\omega_j) &= n^{-1/2} \sum_{t=1}^n x_t e^{-2 \pi i \omega_j t} \\
+&= n^{-1/2} \sum_{t=1}^n x_t [cos(-2 \pi  \omega_j t) + i sin(-2 \pi  \omega_j t)]\\
+&= n^{-1/2} \sum_{t=1}^n x_t cos(2 \pi  \omega_j t) - i n^{-1/2} \sum_{t=1}^n x_t sin(2 \pi  \omega_j t) \\
+&= d_c(\omega_j) - i d_s(\omega_j)
+\end{align*}
+
+
+\end{frame}
+
+
+
 \begin{frame}
 \frametitle{Discrete Fourier Transform}
 
 The difference between the DFT (\ref{eq:DFT}) and the Fourier transform
 in Unit 18 is that the DFT does the computation for
-discrete frequency $\omega_j$ while the Fourier transform does for
+discrete frequencies $\omega_j = j/n$ while the Fourier transform does for
 all frequencies $-1/2 \leq \omega_j \leq 1/2$.
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Discrete Fourier Transform}
+\frametitle{A few more moves}
 
-Using Euler's formula $e^{i\alpha}=cos(\alpha)+i sin(\alpha)$, we could also write the DFT (\ref{eq:DFT}) as
+In
+$$
+d(\omega_j)=n^{-1/2} \sum_{t=1}^n x_t e^{-2 \pi i \omega_j t}
+$$
+note that $d(0) = \sqrt{n} \bar{x}$, and when $j \neq 0$
+\begin{align*}
+\sum_{t=1}^n  e^{-2 \pi i \omega_j t} &= \sum_{t=1}^n  e^{\frac{-2 \pi i j t}{n} } = \sum_{t=1}^n  \left(e^{\frac{-2 \pi i  j}{n} }\right)^t \\
+&= \left(e^{\frac{-2 \pi i  j}{n} }\right)\frac{1 - \left(e^{\frac{-2 \pi i  j}{n} }\right)^n}{ 1 - e^{\frac{-2 \pi i  j}{n} } }
+= 0
+\end{align*}
 
-\begin{equation} \label{eq:DFT2}
-d(\omega_j)=n^{-1/2} \sum_{t=1}^n x_t cos(2 \pi \omega_j t)-i n^{-1/2} \sum_{t=1}^n x_t sin(2 \pi \omega_j t).
-\end{equation}
-
+So, when $j \neq 0$, we can write the DFT as
+$$
+d(\omega_j)=n^{-1/2} \sum_{t=1}^n (x_t-\bar{x}) e^{-2 \pi i \omega_j t}
+$$
 \end{frame}
 
-\begin{frame}
-\frametitle{Discrete Fourier Transform}
 
-The real part of (\ref{eq:DFT2}) is identified as the cosine transform $d_c(\omega_j)$ and the imaginary part as the sine transform $d_s(\omega_j)$.  We could write the DFT (\ref{eq:DFT}) as
-$$
-d(\omega_j)=d_c(\omega_j)-i d_s(\omega_j).
-$$
-\end{frame}
+
+%\begin{frame}
+%\frametitle{Discrete Fourier Transform}
+%
+%Using Euler's formula $e^{i\alpha}=cos(\alpha)+i sin(\alpha)$, we could also write the DFT (\ref{eq:DFT}) as
+%
+%\begin{equation} \label{eq:DFT2}
+%d(\omega_j)=n^{-1/2} \sum_{t=1}^n x_t cos(2 \pi \omega_j t)-i n^{-1/2} \sum_{t=1}^n x_t sin(2 \pi \omega_j t).
+%\end{equation}
+%
+%\end{frame}
+%
+%
+%\begin{frame}
+%\frametitle{Discrete Fourier Transform}
+%
+%The real part of (\ref{eq:DFT2}) is identified as the cosine transform $d_c(\omega_j)$ and the imaginary part as the sine transform $d_s(\omega_j)$.  We could write the DFT (\ref{eq:DFT}) as
+%$$
+%d(\omega_j)=d_c(\omega_j)-i d_s(\omega_j).
+%$$
+%\end{frame}
 
 \section{Periodogram}
 \frame{\tableofcontents[currentsection]}
@@ -134,54 +173,85 @@ $$
 \begin{frame}
 \frametitle{Periodogram}
 
+Recall we want to esitmate $f(\omega) = \sum_{h \in \mathbb{Z}} \gamma(h) e^{-2\pi i \omega h}$
+\newline
+
 The periodogram is defined to be
 
 \begin{equation} \label{eq:period}
 I(\omega_j) =|d(\omega_j)|^2.
 \end{equation}
 
-i.e. the squared modulus of the DFT (\ref{eq:DFT}). Recall that $|a+ib|^2=a^2+b^2$.  Therefore,
-$$
-I(\omega_j)=\left(d_c(\omega_j)\right)^2+\left(-d_s(\omega_j)\right)^2=d^2_c(\omega_j)+d^2_s(\omega_j)
-$$
+Why is this a good sample estimate of $f(w)$?
 
 \end{frame}
 
 
 \begin{frame}
-\frametitle{A Few Notes about Complex Numbers}
+\frametitle{Periodogram}
 
-\begin{eqnarray*}
-\overline{a+ib}&=&a-ib \quad (\mbox{complex conjugate},~~ \overline{a}=a\mbox{~for real number~}a.) \\
-|a+ib|^2&=&a^2+b^2=(a+ib)\overline{(a+ib)}. \quad (|z| \mbox{~is the modulus of~} z.) \\
-\overline{z_1 z_2} &=& \overline{z_1}\text{  }\overline{z_2}, \quad
-\mbox{for two complex numbers~} z_1,z_2.
-\end{eqnarray*}
+For $j=0$, we have $I(0) = n \bar{x}^2$. But, for $j \neq 0$
+\begin{align*}
+I(\omega_j) &=|d(\omega_j)|^2 
+= \left| n^{-1/2} \sum_{t=1}^n (x_t - \bar{x}) e^{-2 \pi i \omega_j t} \right|^2 \\
+&= \left( n^{-1/2} \sum_{t=1}^n (x_t - \bar{x}) e^{-2 \pi i \omega_j t} \right)\left( n^{-1/2} \sum_{s=1}^n (x_s - \bar{x}) e^{2 \pi i \omega_j s} \right) \\
+&=  n^{-1} \sum_{t=1}^n\sum_{s=1}^n  (x_t - \bar{x})(x_s - \bar{x}) e^{-2 \pi i \omega_j [t-s]}  \\
+&=  n^{-1} \sum_{h=-(n-1)}^{(n-1)}\sum_{t=1}^{n-|h|}  (x_{t+|h|} - \bar{x})(x_t - \bar{x}) e^{-2 \pi i \omega_j h}  \\
+&=  \sum_{h=-(n-1)}^{(n-1)} \hat{\gamma}(h) e^{-2 \pi i \omega_j h}  
+\end{align*}
+
 
 \end{frame}
+
+
+
 
 \begin{frame}
-\frametitle{Periodogram as Sample Version of Spectral Density}
+\frametitle{A few things we need}
 
+If $j=0$ or $j=n/2$
+\begin{align*}
+\sum_{t=1}^n \cos^2(2 \pi \omega_j t)  &= n
+\end{align*}
+\begin{align*}
+\sum_{t=1}^n \sin^2(2 \pi \omega_j t)  &= 0
+\end{align*}
 
 
 \end{frame}
+
+
 
 \begin{frame}
 \frametitle{Inverse Fourier Transform}
 
-Another useful property is the inverse Fourier transform
-\begin{eqnarray*}
-x_t&=&n^{-1/2} \sum_{j=0}^{n-1} d(\omega_j) e^{2 \pi i \omega_j t} \\
-&=& \\
-&=& \\
-&=& \\
-&=&
-\end{eqnarray*}
-where $a_0=\bar{x}=(x_1+\cdots+x_n)/n$, and we have assumed for
-simplicity that $n$ is odd and $m=(n-1)/2$.
+The inverse Fourier transform can be used to decompose $\{x_t\}$:
+\begin{align*}
+x_t &= n^{-1/2} \sum_{j=0}^{n-1} d(\omega_j) e^{2 \pi i \omega_j t} \\
+&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d(\omega_j) e^{2 \pi i \omega_j t}   \\
+&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d_c(\omega_j)[ cos(2 \pi  \omega_j t)+ i sin(2 \pi  \omega_j t)] \\
+&\hspace{5mm}  - i n^{-1/2} \sum_{j=1}^{n-1} d_s(\omega_j) [ cos(2 \pi  \omega_j t)+ i sin(2 \pi  \omega_j t)] \\
+&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d_c(\omega_j)cos(2 \pi  \omega_j t)  + n^{-1/2} \sum_{j=1}^{n-1} d_s(\omega_j) sin(2 \pi  \omega_j t) 
+\end{align*}
 
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Inverse Fourier Transform (continued)}
+
+If $n$ is odd, then $\cos(2\pi \omega_j n) = \cos(2\pi \omega_{n-j} n)$, so 
+\begin{align*}
+x_t 
+&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d_c(\omega_j)cos(2 \pi  \omega_j t)  + n^{-1/2} \sum_{j=1}^{n-1} d_s(\omega_j) sin(2 \pi  \omega_j t)  \\
+&= a_0 + 2 n^{-1/2} \sum_{j=1}^{m} d_c(\omega_j)cos(2 \pi  \omega_j t)  + 2n^{-1/2} \sum_{j=1}^{m} d_s(\omega_j) sin(2 \pi  \omega_j t)  \\
+&= a_0 +  \sum_{j=1}^{m} a_j cos(2 \pi  \omega_j t)  + \sum_{j=1}^{m} b_j sin(2 \pi  \omega_j t)  
+\end{align*}
+where $a_0=\bar{x}=(x_1+\cdots+x_n)/n$, and $m=(n-1)/2$.
+
+\end{frame}
+
+
 
 \begin{frame}
 \frametitle{Interpreting the Periodogram}
@@ -249,7 +319,7 @@ The spectral density is the \textbf{long run average} of the periodogram.
 \begin{frame}
 \frametitle{Sampling Distribution of Periodogram}
 
-It turns out that if $\{ x_t \}$ is causal, then
+It turns out that if $\{ x_t \}$ is causal and $\sum_{h =-\infty}^{\infty} |\gamma(h)| < \infty$, then
 
 \begin{equation} \label{eq:asymp}
 \frac{2 I(\omega_{j:n})}{f(\omega_j)} \xrightarrow{d} \text{i.i.d. } \chi_2^2.

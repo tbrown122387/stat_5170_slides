@@ -1,0 +1,11 @@
+\frametitle{Worked Example}
+
+From the periodograms:
+
+\begin{itemize}
+\item obvious peak at $\omega = 1/12$ for yearly cycle.
+\item some peaks at around $\omega = 1/48$ for El Nino cycle. The wide band of activity suggests that this cycle is \textbf{not very regular}.
+\end{itemize}
+
+Note: the horizontal axis of the periodogram produced using the \verb=mvspec()= function from the \verb=astsa= package is in multiples of $\frac{1}{12}$. In Unit 6, the \verb=spec.pgram()= function was used instead and the horizontal axis is the value of the frequency.
+

@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Discrete Fourier Transform}{6}{0}{1}
+\beamer@sectionintoc {2}{Periodogram}{11}{0}{2}
+\beamer@sectionintoc {3}{Sampling Distribution of Periodogram}{21}{0}{3}
+\beamer@sectionintoc {4}{Worked Example}{26}{0}{4}
