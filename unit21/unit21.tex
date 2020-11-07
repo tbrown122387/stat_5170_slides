@@ -32,9 +32,9 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 21: Nonparametric Spectral Density Estimation}
-\author[STAT 5170: Applied Time Series, Unit 21]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 21]{Taylor R. Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020}
+\date{Fall 2020}
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -112,7 +112,7 @@ $\omega'$ are.  We can accomplish this with smoothing.
 \begin{frame}
 \frametitle{Smoothing the Periodogram}
 
-Define a \textbf{frequency band}, $\mathcal{B}$, of L contiguous fundamental frequencies centered
+Define a \textbf{frequency band}, $\mathcal{B}$, of $L$ contiguous fundamental frequencies centered
 around $\omega_j$ as
 \begin{equation} \label{eq:band}
 \mathcal{B}=[\omega_j-m/n, \omega_j+m/n]
@@ -173,10 +173,11 @@ $$
 \begin{frame}
 \frametitle{Bias-Variance Tradeoff}
 
-For bandwidth $B=\frac{L}{n}$, the variance of $\overline{f}(\omega) \approx \frac{c}{B n}$ for some constant $c$. So to \textbf{reduce variance}, we want a bigger bandwidth. \\
-\vspace{5mm}
-
-However, the larger the bandwidth, the more questionable the assumption that $f(\omega)$ is approximately constant in the frequency band $\mathcal{B}=[\omega_j-m/n, \omega_j+m/n]$. The larger the bandwidth, the smoother the $\overline{f}(\omega)$, but we have introduced \textbf{more bias}.
+%For bandwidth $B=\frac{L}{n}$, the variance of $\overline{f}(\omega) \approx \frac{c}{B n}$ for some constant $c$. So to \textbf{reduce variance}, we want a bigger bandwidth. \\
+%\vspace{5mm}
+%
+%However, 
+The larger the bandwidth, the more questionable the assumption that $f(\omega)$ is approximately constant in the frequency band $\mathcal{B}=[\omega_j-m/n, \omega_j+m/n]$. The larger the bandwidth, the smoother the $\overline{f}(\omega)$, but we have introduced \textbf{more bias}.
 
 \end{frame}
 

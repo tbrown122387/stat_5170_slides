@@ -1,0 +1,12 @@
+\frametitle{Modified Daniell Kernel}
+
+Applying the modified Daniell kernel again produces
+\begin{eqnarray*}
+\hat{\hat{u}}_t &=& \frac{1}{4} \hat{u}_{t-1}+\frac{1}{2}
+\hat{u}_{t}+\frac{1}{4} \hat{u}_{t+1}\cr
+&=&\frac{1}{16} u_{t-2}+\frac{4}{16} u_{t-1}+\frac{6}{16} u_{t}
++\frac{4}{16} u_{t+1}+\frac{1}{16} u_{t+2}.
+\end{eqnarray*}
+
+%In \verb=spec.pgram()= function in R, this kernel is specified by \verb?spans=c(3,3)?.
+
