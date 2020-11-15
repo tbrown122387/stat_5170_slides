@@ -165,9 +165,21 @@ where
 \begin{frame}
 \frametitle{Weighted Least Squares}
 
-So (\ref{eq:matrix2}) can be viewed as a classical regression model and solved using ``ordinary least squares"'. The WLS estimate is
+So (\ref{eq:matrix2}) can be viewed as a classical regression model and solved using ``ordinary least squares"': 
 
-\vspace{50mm}
+\begin{align*}
+\hat{\boldsymbol{\beta}} 
+&= \left[\boldsymbol{Z}^{*'}\boldsymbol{Z}^* \right]^{-1} \boldsymbol{Z}^{*'} \boldsymbol{y}^* \\
+&= \left[\left(\boldsymbol{\Gamma}^{-1/2}\boldsymbol{Z} \right)' \boldsymbol{\Gamma}^{-1/2}\boldsymbol{Z} \right]^{-1} \left(\boldsymbol{\Gamma}^{-1/2}\boldsymbol{Z}\right)^{'} \boldsymbol{\Gamma}^{-1/2} \boldsymbol{y} \\ 
+&= \left[ \boldsymbol{Z}'  \boldsymbol{\Gamma}^{-1} \boldsymbol{Z} \right]^{-1} \boldsymbol{Z}^{'}\boldsymbol{\Gamma}^{-1} \boldsymbol{y}
+\end{align*}
+
+\begin{align*}
+\text{Var}\left( \hat{\boldsymbol{\beta}} \right) 
+&= \left[ \boldsymbol{Z}'  \boldsymbol{\Gamma}^{-1} \boldsymbol{Z} \right]^{-1} \boldsymbol{Z}^{'}\boldsymbol{\Gamma}^{-1}\text{Var}(\boldsymbol{y})\left[ \left[ \boldsymbol{Z}'  \boldsymbol{\Gamma}^{-1} \boldsymbol{Z} \right]^{-1} \boldsymbol{Z}^{'}\boldsymbol{\Gamma}^{-1} \right]' \\
+&= \left[ \boldsymbol{Z}'  \boldsymbol{\Gamma}^{-1} \boldsymbol{Z} \right]^{-1} \boldsymbol{Z}^{'}\left[ \left[ \boldsymbol{Z}'  \boldsymbol{\Gamma}^{-1} \boldsymbol{Z} \right]^{-1} \boldsymbol{Z}^{'}\boldsymbol{\Gamma}^{-1} \right]' \\
+&=  \left[ \boldsymbol{Z}'  \boldsymbol{\Gamma}^{-1} \boldsymbol{Z} \right]^{-1} 
+\end{align*}
 
 \end{frame}
 
@@ -233,15 +245,15 @@ We are back to working in the regression framework, after transforming the respo
 
 
 \begin{frame}
-\frametitle{Building the Regression Model with AR Errors}
+\frametitle{Building the Regression Model with AR Errors: The Cochrane/Orcutt procedure}
 
 The procedure in building the regression model with AR errors is
 
 \begin{enumerate}
 \item Use ordinary least squares (OLS) to estimate (\ref{eq:classic}).
-\item Examine the AR structure of the \textbf{sample residuals} from step 1.
+\item Examine the AR structure of the \textbf{sample residuals} from step 1: $\hat{x}_t = y_t - \sum_{j=1}^r \hat{\beta}_j z_{tj}$.
 \item Estimate the coefficients $\phi_1, \cdots, \phi_p$ using ARIMA estimation.
-\item Use the estimated $\hat{\phi}_1, \cdots, \hat{\phi}_p$ to compute $y_t^*$ and $z_{tj}^*$.
+\item Use the estimated $\hat{\phi}_1, \cdots, \hat{\phi}_p$ to compute $y_t^* = \hat{\phi}(B)y_t$ and $z_{tj}^* = \hat{\phi}(B)z_{tj}$.
 \item Use OLS to estimate (\ref{eq:ar}).
 \end{enumerate}
 
