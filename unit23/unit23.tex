@@ -247,7 +247,7 @@ We are back to working in the regression framework, after transforming the respo
 \begin{frame}
 \frametitle{Building the Regression Model with AR Errors: The Cochrane/Orcutt procedure}
 
-The procedure in building the regression model with AR errors is
+The CO procedure in building the regression model with AR errors is
 
 \begin{enumerate}
 \item Use ordinary least squares (OLS) to estimate (\ref{eq:classic}).
@@ -261,6 +261,26 @@ If the steps above are done properly, the residuals at the end of step 5 should 
 
 
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Building the Regression Model with AR Errors: Our Procedure}
+
+
+Our procedure is slightly different:
+
+\begin{enumerate}
+\item Use ordinary least squares (OLS) to estimate (\ref{eq:classic}).
+\item Examine the AR structure of the \textbf{sample residuals} from step 1: $\hat{x}_t = y_t - \sum_{j=1}^r \hat{\beta}_j z_{tj}$.
+\item Figure out which $p$ would be suitable to model these residuals but don't estimate the coefficients $\phi_1, \cdots, \phi_p$.
+\item Use MLE to estimate the overall model's parameters: $\beta_1, \ldots, \beta_r$, $\sigma^2$, and $\phi_1, \ldots, \phi_p$.
+\end{enumerate}
+
+If the steps above are done properly, the residuals at the end of step 4 should be \textbf{white noise}. We can also try several models, and compare their information criteria.
+
+
+\end{frame}
+
 
 \section{Worked Example}
 \frame{\tableofcontents[currentsection]}
@@ -318,7 +338,7 @@ Residuals appear to have an AR(1) structure.
 \begin{frame}[fragile]
 \frametitle{Worked Example: Sales}
 
-\verb=sarima()= function in R from \verb=astsa= package carries out steps 3, 4, 5. 
+\verb=sarima()= function in R from \verb=astsa= package performs maximum likelihood estimation, but you have to pick which model to estimate:
 
 \begin{verbatim}
 > sarima(company, 1, 0, 0, xreg=cbind(industry))

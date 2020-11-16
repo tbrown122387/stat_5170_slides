@@ -1,3 +1,3 @@
 \beamer@sectionintoc {1}{Regression Model with Correlated Errors}{5}{0}{1}
 \beamer@sectionintoc {2}{Regression Model with AR Errors}{13}{0}{2}
-\beamer@sectionintoc {3}{Worked Example}{19}{0}{3}
+\beamer@sectionintoc {3}{Worked Example}{20}{0}{3}
