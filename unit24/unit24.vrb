@@ -1,0 +1,12 @@
+\frametitle{Box-Jenkins Methodology for Lagged Regression}
+
+\begin{enumerate}
+
+\item Fit an ARMA model for $x_t$, so we have estimates of $\theta_x(B)$ and $\phi_x(B)$.
+\item Prewhiten the variables by applying the operator $\frac{\phi_x(B)}{\theta_x(B)}$ to both variables.
+\item Compute the cross-correlation of the variables (after prewhitening) to estimate the time delay $d$ and suggest a form for (\ref{eq:reg}).
+\item Obtain $\boldsymbol{\hat{\beta}} = (\hat{\omega}_1, \cdots, \hat{\omega}_r, \hat{\delta}_0, \hat{\delta}_1, \cdots, \hat{\delta}_s)$ using a regression of the form in (\ref{eq:reg}). Store the residuals from this regression.
+\item Fit an ARMA model for the noise $u_t$ using the residuals from the previous step and using the techniques mentioned in Unit 23.
+\item Estimate the overall model using MLE (\verb|sarima|)
+\end{enumerate}
+Steps 1-3 are handled by \verb|prewhiten|. (4) is handled by \verb|lm|.

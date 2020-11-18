@@ -32,9 +32,9 @@ xcolor=pdftex]{beamer}
    \setcounter{framenumber}{\value{finalframe}}
 }\newtheorem{proposition}{Proposition}
 \title{Unit 24: Lagged Regression}
-\author[STAT 5170: Applied Time Series, Unit 26]{Jeffrey Woo}
+\author[STAT 5170: Applied Time Series, Unit 26]{Taylor R. Brown}
 \institute{Department of Statistics, University of Virginia}
-\date{Spring 2020}
+\date{Fall 2020}
 
 \AtBeginSubsection[] {
   \begin{frame}<beamer>{Outline}
@@ -168,7 +168,8 @@ The cross-correlation function of jointly stationary $\{x_t\}$ and $\{y_t\}$ is
 
 Properties:
 \begin{itemize}
-\item $\rho_{xy}(h) = \rho_{xy}(-h)$.
+\item $\rho_{xy}(h) \neq \rho_{yx}(-h)$.
+\item $\rho_{xy}(h) = \rho_{yx}(-h)$.
 \item $|\rho_{xy}(h)| \leq 1$.
 \end{itemize}
 
@@ -181,7 +182,7 @@ Properties:
 
 \vspace{5mm}
 
-Recall that the autocovariance function is symmetric. The cross-covariance function, $\gamma_{xy}(h)$, is not symmetric, i.e. $\gamma_{xy}(h) \neq \gamma_{xy}(-h)$. However, $\gamma_{xy}(h) = \gamma_{yx}(-h)$.
+%Recall that the autocovariance function is symmetric. The cross-covariance function, $\gamma_{xy}(h)$, is not symmetric, i.e. $\gamma_{xy}(h) \neq \gamma_{xy}(-h)$. However, $\gamma_{xy}(h) = \gamma_{yx}(-h)$.
 
 \end{frame}
 
@@ -209,14 +210,14 @@ for $h \geq 0$. The sample CCF is
 \hat{\rho}_{xy}(h) = \frac{\hat{\gamma}_{xy}(h)}{\sqrt{\hat{\gamma}_{x}(0) \hat{\gamma}_{y}(0) }}
 \end{equation*}
 
-If $\{x_t\}$ or $\{y_t\}$ is \textbf{white noise}, then $\hat{\rho}_{xy}(h) \sim N(0, 1/n)$.
+If **either** $\{x_t\}$ or $\{y_t\}$ is \textbf{white noise}, then $\hat{\rho}_{xy}(h) \sim N(0, 1/n)$. This is a special case of {\bf Bartlett's Theorem} (Theorem A.8 in the appendix).
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Prewhitening}
 
-If neither $\{x_t\}$ nor $\{y_t\}$ is white noise, then hypothesis tests to detect significant CCFs are unreliable. Thus, we typically \textbf{prewhiten} the data, then produce the CCF plot of the data. 
+If neither $\{x_t\}$ nor $\{y_t\}$ is white noise, then the sampling distribution of cross-correlation estimates are problematic, and so hypothesis tests to detect significant CCFs are unreliable. Thus, we typically \textbf{prewhiten} the data, then produce the CCF plot of the data. 
 
 \begin{itemize}
 
@@ -256,8 +257,25 @@ We typically consider lagged regression models of the form
 y_t = \sum_{j=0}^\infty \alpha_j x_{t-j} + \eta_t = \alpha(B) x_t + \eta_t
 \end{equation}
 
-where $\alpha(B) = \sum_{j=0}^\infty \alpha_j$ and $\eta_t$ is a stationary ARMA noise process. 
+where $\alpha(B) = \sum_{j=0}^\infty \alpha_j B^j$ is the {\bf transfer function} and $\eta_t$ is a stationary ARMA noise process. 
 
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Lagged Regression Model versus Regression with ARMA errors}
+
+Unlike the model from the previous chapter, we assume both $x_t$ and $\eta_t$ each have their own process:
+
+$$
+\phi(B) x_t = \theta(B) w_t
+$$
+$$
+\phi_{\eta}(B) \eta_t = \theta_\eta (B) z_t
+$$
+
+where $w_t$ and $z_t$ are white noise processes. 
 
 
 \end{frame}
@@ -295,21 +313,76 @@ Subbing (\ref{eq:alpha}) into (\ref{eq:lag1}), we obtain
 y_t = \frac{\delta(B) B^d}{\omega(B)} x_t + \eta_t
 \end{equation}
 
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Box-Jenkins Approach}
-
-Expanding the backshifts in $\delta(B)$ and $\omega(B)$ in (\ref{eq:lag2}), we obtain
+Multiplying both sides by $\omega(B)$ we get
 
 \begin{equation} \label{eq:reg}
 y_t = \sum_{k=1}^r \omega_k y_{t-k} + \sum_{k=0}^s \delta_k x_{t-d-k} + u_t.
 \end{equation}
 
-where $u_t = \omega(B)\eta_t$.\\
+where $u_t = \omega(B)\eta_t$.
+\newline
+
+
+This is a regression model with ARMA errors again!
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Box-Jenkins Approach}
+
+We will fit the model via MLE, but to identify {\bf which} model we should fit, here's a helpful derivation:
+
+$$
+y_t = \alpha(B) x_t + \eta_t
+$$
+
+After pre-whitening, because $\phi(B) x_t = \theta(B) w_t$
+\begin{align*}
+\tilde{y}_t &= \frac{\phi(B)}{\theta(B)} y_t \\
+&= \frac{\phi(B)}{\theta(B)} \left[ \alpha(B) x_t + \eta_t \right] \\
+&=  \alpha(B)\frac{\phi(B)}{\theta(B)} x_t + \frac{\phi(B)}{\theta(B)} \eta_t  \\
+&=  \alpha(B) w_t + \frac{\phi(B)}{\theta(B)} \eta_t  \\
+\end{align*}
+
+%\verb|TSA::prewhiten| gives us
+%\begin{align*}
+%\gamma_{w,\tilde{y}}(-h) &= \text{Cov}\left(w_{t-h}, \tilde{y}_t \right) \\
+%&= \text{Cov}\left(w_{t-h}, \alpha(B) w_t + \frac{\phi(B)}{\theta(B)} \eta_t \right) 
+%\end{align*}
+
 
 \end{frame}
+
+
+
+\begin{frame}[fragile]\frametitle{Box-Jenkins Approach (continued)}
+
+
+$$
+\tilde{y}_t =  \alpha(B) w_t + \frac{\phi(B)}{\theta(B)} \eta_t  
+$$
+
+\verb|TSA::prewhiten| gives us
+\begin{align*}
+\gamma_{w,\tilde{y}}(-h) &= \text{Cov}\left(w_{t-h}, \tilde{y}_t \right) \\
+&= \text{Cov}\left(w_{t-h}, \alpha(B) w_t + \frac{\phi(B)}{\theta(B)} \eta_t \right) \\
+&= \text{Cov}\left(w_{t-h}, \sum_{j=0}^{\infty} \alpha_j w_{t-j} \right) \\
+&= \alpha_h \sigma^2_w 
+\end{align*}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sample Cross-Covariance and Sample CCF}
+
+\textbf{Example}: CCF of SOI and recruit data with prewhitening.
+
+\includegraphics[width=110mm, height=75mm]{Screenshot from 2020-11-18 16-11-59.png}
+
+\end{frame}
+
+
 
 \begin{frame}
 \frametitle{Box-Jenkins Approach}
@@ -322,7 +395,7 @@ where $u_t = \omega(B)\eta_t$.\\
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Box-Jenkins Methodology for Lagged Regression}
 
 \begin{enumerate}
@@ -332,9 +405,9 @@ where $u_t = \omega(B)\eta_t$.\\
 \item Compute the cross-correlation of the variables (after prewhitening) to estimate the time delay $d$ and suggest a form for (\ref{eq:reg}).
 \item Obtain $\boldsymbol{\hat{\beta}} = (\hat{\omega}_1, \cdots, \hat{\omega}_r, \hat{\delta}_0, \hat{\delta}_1, \cdots, \hat{\delta}_s)$ using a regression of the form in (\ref{eq:reg}). Store the residuals from this regression.
 \item Fit an ARMA model for the noise $u_t$ using the residuals from the previous step and using the techniques mentioned in Unit 23. 
-
+\item Estimate the overall model using MLE (\verb|sarima|)
 \end{enumerate}
-
+Steps 1-3 are handled by \verb|prewhiten|. (4) is handled by \verb|lm|.
 \end{frame}
 
 \begin{frame}
@@ -373,7 +446,7 @@ where $u_t = \omega(B)\eta_t$.\\
 \begin{frame}
 \frametitle{Worked Example}
 
-Some of these steps are worked out in some functions in R. What we still need to do is to examine the prewhitened CCF to determine the kind of lagged regression model we should fit (step 3), and examine residuals to determine their ARMA structure (step 5).
+Some of these steps are worked out in some functions in R. What we still need to do is to examine the prewhitened CCF to determine the kind of lagged regression model we should fit (steps 1-3), and examine residuals to determine their ARMA structure (step 5).
 
 
 \end{frame}

@@ -1,0 +1,3 @@
+\beamer@sectionintoc {1}{Bivariate Processes}{5}{0}{1}
+\beamer@sectionintoc {2}{Lagged Regression Model}{16}{0}{2}
+\beamer@sectionintoc {3}{Worked Example}{29}{0}{3}
