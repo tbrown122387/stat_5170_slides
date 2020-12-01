@@ -229,9 +229,9 @@ The inverse Fourier transform can be used to decompose $\{x_t\}$:
 \begin{align*}
 x_t &= n^{-1/2} \sum_{j=0}^{n-1} d(\omega_j) e^{2 \pi i \omega_j t} \\
 &= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d(\omega_j) e^{2 \pi i \omega_j t}   \\
-&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d_c(\omega_j)[ cos(2 \pi  \omega_j t)+ i sin(2 \pi  \omega_j t)] \\
-&\hspace{5mm}  - i n^{-1/2} \sum_{j=1}^{n-1} d_s(\omega_j) [ cos(2 \pi  \omega_j t)+ i sin(2 \pi  \omega_j t)] \\
-&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d_c(\omega_j)cos(2 \pi  \omega_j t)  + n^{-1/2} \sum_{j=1}^{n-1} d_s(\omega_j) sin(2 \pi  \omega_j t) 
+&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d_c(\omega_j)[ \cos(2 \pi  \omega_j t)+ i \sin(2 \pi  \omega_j t)] \\
+&\hspace{5mm}  - i n^{-1/2} \sum_{j=1}^{n-1} d_s(\omega_j) [ \cos(2 \pi  \omega_j t)+ i \sin(2 \pi  \omega_j t)] \\
+&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d_c(\omega_j) \cos(2 \pi  \omega_j t)  + n^{-1/2} \sum_{j=1}^{n-1} d_s(\omega_j) \sin(2 \pi  \omega_j t) 
 \end{align*}
 
 \end{frame}
@@ -243,9 +243,9 @@ x_t &= n^{-1/2} \sum_{j=0}^{n-1} d(\omega_j) e^{2 \pi i \omega_j t} \\
 If $n$ is odd, then $\cos(2\pi \omega_j n) = \cos(2\pi \omega_{n-j} n)$, so 
 \begin{align*}
 x_t 
-&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d_c(\omega_j)cos(2 \pi  \omega_j t)  + n^{-1/2} \sum_{j=1}^{n-1} d_s(\omega_j) sin(2 \pi  \omega_j t)  \\
-&= a_0 + 2 n^{-1/2} \sum_{j=1}^{m} d_c(\omega_j)cos(2 \pi  \omega_j t)  + 2n^{-1/2} \sum_{j=1}^{m} d_s(\omega_j) sin(2 \pi  \omega_j t)  \\
-&= a_0 +  \sum_{j=1}^{m} a_j cos(2 \pi  \omega_j t)  + \sum_{j=1}^{m} b_j sin(2 \pi  \omega_j t)  
+&= \bar{x} + n^{-1/2} \sum_{j=1}^{n-1} d_c(\omega_j) \cos(2 \pi  \omega_j t)  + n^{-1/2} \sum_{j=1}^{n-1} d_s(\omega_j) \sin(2 \pi  \omega_j t)  \\
+&= a_0 + 2 n^{-1/2} \sum_{j=1}^{m} d_c(\omega_j)\cos(2 \pi  \omega_j t)  + 2n^{-1/2} \sum_{j=1}^{m} d_s(\omega_j) \sin(2 \pi  \omega_j t)  \\
+&= a_0 +  \sum_{j=1}^{m} a_j \cos(2 \pi  \omega_j t)  + \sum_{j=1}^{m} b_j \sin(2 \pi  \omega_j t)  
 \end{align*}
 where $a_0=\bar{x}=(x_1+\cdots+x_n)/n$, and $m=(n-1)/2$.
 
